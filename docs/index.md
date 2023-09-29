@@ -1,4 +1,4 @@
-# NoahHsu's Software Engineer Ark
+# Home
 Here is my place to share technical articles about software engineering.
 
 ## About Me
