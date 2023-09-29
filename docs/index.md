@@ -1,10 +1,11 @@
-# NoahHsu's Software Engineer Ark
+# Home
 Here is my place to share technical articles about software engineering.
 
 ## About Me
-I'm a Java Server-Side-Engineer🚀, focusing on Java, Spring Boot, Toggle System, Kafka, Event Sourcing, and CI/CD. 
+I'm a Java Server-Side-Engineer🚀, focusing on Java, Spring Boot, Kafka, Event Sourcing, and DevOps (CI/CD, Toggle System, etc.). 
 
 ## Spotlight
+- [Easier, Flexible, and Lower Resource Cost Deployment Strategies by Feature Toggle](https://noahhsu.github.io/DevOps/Easier%2C%20Flexible%2C%20and%20Lower%20Resource%20Cost%20Deployment%20Strategies%20by%20Feature%20Toggle/)
 - [Event Sourcing POC for an EC use case](https://github.com/NoahHsu/event-sourcing-order-poc)
 - [OpenFeature help deployment strategies](https://github.com/NoahHsu/open-feature-openflagr-example)
 
