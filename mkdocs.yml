@@ -6,10 +6,6 @@ edit_uri: 'edit/main/docs/'
 site_author: NoahHsu
 
 extra_javascript:
-  - path: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1453160910119702'
-    async: true
-  - path: 'https://www.googletagmanager.com/gtag/js?id=G-J8TC3WPHWC'
-    async: true
   - path: analytics.js
 
 theme:
