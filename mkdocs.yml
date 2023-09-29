@@ -1,0 +1,12 @@
+site_name: Noah Hsu's TechDoc
+site_url: https://noahhsu.github.io/
+repo_url: https://github.com/NoahHsu/noahhsu.github.io
+
+site_author: NoahHsu
+
+theme:
+  name: mkdocs
+  nav_style: dark
+  hljs_languages:
+    - yaml
+    - java
