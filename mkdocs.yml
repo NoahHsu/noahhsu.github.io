@@ -7,6 +7,7 @@ site_author: NoahHsu
 
 extra_javascript:
   - path: analytics.js
+    defer: true
 
 theme:
   name: journal
