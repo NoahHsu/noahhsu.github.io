@@ -25,6 +25,8 @@ jobs:
         run: |
           pip install \
             "mkdocs" \
-            "mkdocs-material"
+            "mkdocs-material" \
+            "mkdocs-bootswatch"
 
-      - run: mkdocs gh-deploy --force
+      - name: Build and Deploy
+        run: mkdocs gh-deploy --force
