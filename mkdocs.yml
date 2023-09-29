@@ -4,6 +4,7 @@ repo_url: https://github.com/NoahHsu/noahhsu.github.io
 edit_uri: 'edit/main/docs/'
 
 site_author: NoahHsu
+google_analytics: ['G-J8TC3WPHWC', 'https://noahhsu.github.io']
 
 theme:
   name: journal
