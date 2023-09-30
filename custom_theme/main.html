@@ -1,6 +1,8 @@
-$('head').append('
+{% extends "base.html" %}
+
+{% block libs %}
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1453160910119702"
-     crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8TC3WPHWC"></script>
 <script>
@@ -10,4 +12,4 @@ $('head').append('
 
   gtag("config", "G-J8TC3WPHWC");
 </script>
-');
+{% endblock %}

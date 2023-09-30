@@ -1,16 +1,13 @@
-site_name: Noah's Tech Ark
+site_name: NoahHsu's Server Side Journal
 site_url: https://noahhsu.github.io/
 repo_url: https://github.com/NoahHsu/noahhsu.github.io
 edit_uri: 'edit/main/docs/'
 
 site_author: NoahHsu
 
-extra_javascript:
-  - path: analytics.js
-    defer: true
-
 theme:
-  name: journal
+  name: cyborg
+  custom_dir: custom_theme/
   hljs_languages:
     - yaml
     - java
