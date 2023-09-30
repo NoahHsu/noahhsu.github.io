@@ -1,4 +1,5 @@
 # Easier, Flexible, and Lower Resource Cost Deployment Strategies by Feature Toggle
+![img.png](cover_image.png)
 Having different deployment strategies is essential to ensure that the new version of the software is delivered to users in an efficient and robust way. After reading other articles, we can organize the following summary( If you are not familiar with deployment strategies, please see [this](https://www.baeldung.com/ops/deployment-strategies) or [this](https://www.plutora.com/blog/deployment-strategies-6-explained-in-depth) to get a comprehensive explanation):
 
 The easiest **Recreate Deployment** might cause service downtime and expose potential bugs to all users. Others (**Blue/Green, Rolling, A/B Testing, Shadow, Canary**… ) guarantee zero downtime, and some of them use more resources (hardware like memory, CPU…) to achieve running both versions of the applications at the same time to provide more confidence in a release or easier to rollback to the old version.
@@ -272,7 +273,7 @@ String version = client.getStringValue(FLAG_KEY, "v1", ctx);
 boolean toggleOn = client.getBooleanValue(FLAG_KEY, false, ctx);
 ```
 
-### What Benefits?
+### What's the Benefits?
 Here is a rough introduction of how to integrate a toggle system via OpenFeature specification (please check my [GitHub Repo](https://github.com/NoahHsu/open-feature-openflagr-example/tree/main/client/src/main/java/org/example/open/feature/openflagr/client) for more details and complete code). The toggle logic is extracted into another abstract layer and the **main application remains focused on core business and deployment strategies**. Even one day we need to change the toggle system, the application won’t need any change, since we only need to develop the new XxxClient and XxxFeatureProvider (maybe there is an existing one so no development work is needed, check out the [OpenFeature Ecosystem](https://openfeature.dev/ecosystem)).
 
 ---
@@ -283,6 +284,6 @@ In this article, we go through three points that we should know when we want to 
 ### Reference
 Deployment strategies and toggle knowledge
 
-- https://www.baeldung.com/ops/deployment-strategies
-- https://www.plutora.com/blog/deployment-strategies-6-explained-in-depth
-- https://martinfowler.com/articles/feature-toggles.html
+- [https://www.baeldung.com/ops/deployment-strategies](https://www.baeldung.com/ops/deployment-strategies)
+- [https://www.plutora.com/blog/deployment-strategies-6-explained-in-depth](https://www.plutora.com/blog/deployment-strategies-6-explained-in-depth)
+- [https://martinfowler.com/articles/feature-toggles.html](https://martinfowler.com/articles/feature-toggles.html)

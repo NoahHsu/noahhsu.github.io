@@ -1,4 +1,4 @@
-site_name: NoahHsu's Server Side Journal
+site_name: NoahHsu's SWE Note
 site_url: https://noahhsu.github.io/
 repo_url: https://github.com/NoahHsu/noahhsu.github.io
 edit_uri: 'edit/main/docs/'
@@ -6,8 +6,13 @@ edit_uri: 'edit/main/docs/'
 site_author: NoahHsu
 
 theme:
-  name: cyborg
+  name: spacelab
   custom_dir: custom_theme/
   hljs_languages:
     - yaml
     - java
+
+plugins:
+  - search:
+      min_search_length: 2
+      separator: '[\s\-\.]+'
