@@ -1,8 +1,15 @@
+---
+hide:
+- feedback
+---
 # Home
 Here is my place to share technical articles about software engineering.
 
 ## About Me
-I'm a Java Server-Side-Engineer🚀, focusing on Java, Spring Boot, Kafka, Event Sourcing, and DevOps (CI/CD, Toggle System, etc.). 
+I'm a Java Server-Side-Engineer🚀, focusing on Java, Spring Boot, Kafka, Event Sourcing, and DevOps (CI/CD, Toggle System, etc.).
+
+![portrait.jpg](assets%2Fhome%2Fportrait.jpg){ align="middle" width="200" }
+
 
 ## Spotlight
 - [Easier, Flexible, and Lower Resource Cost Deployment Strategies by Feature Toggle](https://noahhsu.github.io/DevOps/Easier%2C%20Flexible%2C%20and%20Lower%20Resource%20Cost%20Deployment%20Strategies%20by%20Feature%20Toggle/)
@@ -10,7 +17,7 @@ I'm a Java Server-Side-Engineer🚀, focusing on Java, Spring Boot, Kafka, Event
 - [OpenFeature help deployment strategies](https://github.com/NoahHsu/open-feature-openflagr-example)
 
 ## Supporting
-If you found my articles valuable, consider supporting my work. You can show your appreciation by [buying me a beer 🍺](https://www.buymeacoffee.com/swbhcjhtyvv). 
+If you found my articles valuable, consider supporting my work. You can show your appreciation by [buying me a beer 🍺](https://www.buymeacoffee.com/swbhcjhtyvv).
 
 <a href="https://www.buymeacoffee.com/swbhcjhtyvv">
 <img width="545" alt="bmc-button" src="https://github.com/NoahHsu/noahhsu.github.io/assets/58896446/782f917e-bd8a-4d9a-8e7b-f0784a949cde">

@@ -39,11 +39,35 @@ theme:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/ultrabug/mkdocs-static-i18n
-      name: mkdocs-static-i18n on Github
+      link: https://github.com/NoahHsu
+    - icon: fontawesome/brands/medium
+      link: https://medium.com/@noahhsu
+    - icon: fontawesome/brands/linkedin
+      link: www.linkedin.com/in/tzu-ting-hsu-72a32715a
   analytics:
     provider: google
     property: G-J8TC3WPHWC
+    feedback:
+      title: Was this page helpful?
+      ratings:
+        - icon: material/thumb-up-outline
+          name: This page was helpful
+          data: 1
+          note: >-
+            Thanks for your feedback!
+        - icon: material/thumb-down-outline
+          name: This page could be improved
+          data: 0
+          note: >-
+            Thanks for your feedback! Help us improve this page by
+            <a href="https://github.com/NoahHsu/noahhsu.github.io/issues/new" target="_blank" rel="noopener">create issue</a> in my GitHub Repo.
+  consent:
+    title: Cookie consent
+    description: >-
+      We use cookies to recognize your repeated visits and preferences, as well
+      as to measure the effectiveness of our documentation and whether users
+      find what they're searching for. With your consent, you're helping us to
+      make our documentation better.
 
 plugins:
   - tags:
@@ -66,6 +90,8 @@ plugins:
           name: 繁體中文
           build: true
           site_name: "Noah Hsu的軟體工程師筆記"
+  - git-revision-date
+  - glightbox
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -75,3 +101,5 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+  - attr_list
+  - md_in_html
