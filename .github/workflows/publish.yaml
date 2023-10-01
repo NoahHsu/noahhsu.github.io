@@ -28,7 +28,9 @@ jobs:
           pip install \
             "mkdocs" \
             "mkdocs-material" \
-            "mkdocs-bootswatch"
+            "mkdocs-bootswatch" \
+            "mkdocs-static-i18n"
+
 
       - name: Build and Deploy
         run: mkdocs gh-deploy --force

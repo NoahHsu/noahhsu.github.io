@@ -1,3 +1,11 @@
+---
+hide:
+- tags
+tags:
+- DevOps
+- Feature Toggle
+- Deployment Strategy
+---
 # Easier, Flexible, and Lower Resource Cost Deployment Strategies by Feature Toggle
 ![img.png](cover_image.png)
 Having different deployment strategies is essential to ensure that the new version of the software is delivered to users in an efficient and robust way. After reading other articles, we can organize the following summary( If you are not familiar with deployment strategies, please see [this](https://www.baeldung.com/ops/deployment-strategies) or [this](https://www.plutora.com/blog/deployment-strategies-6-explained-in-depth) to get a comprehensive explanation):
@@ -51,7 +59,7 @@ The configuration of the toggle is very simple in these two scenarios.
 
 and the code is like the below for a **Blue/Green Deployment**:
 
-```java
+``` java
 ...
 boolean toggleOn = client.getBooleanValue(FLAG_KEY, false, ctx);
 
@@ -75,7 +83,7 @@ In this way, we can **save a lot of hardware resources since we don’t need com
 
 ### Shadow Release (on/off)
 in this example, we can share the same flag config with the blue/green deployment but set the toggle on in the first place. The code is like the below for a **Shadow Deployment**:
-```java
+``` java
 ...
 String version = client.getStringValue(FLAG_KEY, "off", ctx);
 
@@ -106,7 +114,7 @@ Let’s introduce the distribution feature into the toggle’s configuration for
 
 and the code is like the below for a Canary Release:
 
-```java
+``` java
 ...
 UUID userId = UUID.randomUUID();
 MutableContext ctx = new MutableContext(userId.toString());
@@ -147,7 +155,7 @@ Finally, let’s implement A/B testing. We could add the final piece of a toggle
 ![image](https://github.com/NoahHsu/noahhsu.github.io/assets/58896446/d9cb5ba3-1c9e-4ee2-8e05-d8acdbb580e2)
 and the code is like below for A/B Testing:
 
-```java
+``` java
 ...
 UUID userId = UUID.randomUUID();
 MutableContext ctx = new MutableContext(userId.toString());
@@ -189,7 +197,7 @@ We won’t cover too much about OpenFeature, but here is the basic key concept t
 ### Implementation:
 - Develop an XxxClient (i.e. flagrClient), or use the SDK provided by the toggle system to be an API Client to send requests to the toggle system.
 
-  ```java
+  ``` java
   public interface OpenFlagrClient {
 
     String BASE_PATH = "/api/v1/";
@@ -202,7 +210,7 @@ We won’t cover too much about OpenFeature, but here is the basic key concept t
   ```
 - Develop an [XxxFeatureProvider](https://github.com/open-feature/java-sdk/blob/d5a9867365d62bda51b87ff1d13e4f4daaee87cd/src/main/java/dev/openfeature/sdk/FeatureProvider.java#L11), which lists all the common (or maybe the more reasonable) use cases for a real-time toggle evaluation logic.
 
-  ```java
+  ``` java
   public class OpenFlagrProvider implements FeatureProvider {
   ...
     public ProviderEvaluation<Boolean> getBooleanEvaluation(String key, 
@@ -242,7 +250,7 @@ We won’t cover too much about OpenFeature, but here is the basic key concept t
 ### Configuration
 Then, configure the XxxFeatureProvider to the [OpenFeatureAPI](https://github.com/open-feature/java-sdk/blob/d5a9867365d62bda51b87ff1d13e4f4daaee87cd/src/main/java/dev/openfeature/sdk/OpenFeatureAPI.java) instance, which is designed to have multiple different FeatureProvider (can set/get with name). Here, since I am working on a spring boot, I build a class to contain the OpenFeatureAPI instance.
 
-```java
+``` java
 public class FeatureToggleApiProvider implements InitializingBean {
     @Autowired
     FlagrClient flagrClient;
@@ -265,7 +273,7 @@ public class FeatureToggleApiProvider implements InitializingBean {
 
 Finally, other modules can make use of this `OpenFlagrProvider` to perform toggle evaluation by getting a [Client](https://github.com/open-feature/java-sdk/blob/d5a9867365d62bda51b87ff1d13e4f4daaee87cd/src/main/java/dev/openfeature/sdk/Client.java) interface ( not implemented by the XxxClient, but is by [OpenFeatureClient](https://github.com/open-feature/java-sdk/blob/d5a9867365d62bda51b87ff1d13e4f4daaee87cd/src/main/java/dev/openfeature/sdk/OpenFeatureClient.java) which will make use of the given [XxxFeatureProvider](https://github.com/open-feature/java-sdk/blob/d5a9867365d62bda51b87ff1d13e4f4daaee87cd/src/main/java/dev/openfeature/sdk/FeatureProvider.java#L11)):
 
-```java
+``` java
 Client client = featureToggleApiProvider.getFlagrApiClient();
 
 String version = client.getStringValue(FLAG_KEY, "v1", ctx);

@@ -6,13 +6,72 @@ edit_uri: 'edit/main/docs/'
 site_author: NoahHsu
 
 theme:
-  name: spacelab
+  name: material
   custom_dir: custom_theme/
+  palette:
+    # Palette toggle for light mode
+    - scheme: default
+      primary: brown
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - scheme: slate
+      primary: blue grey
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.indexes
+    - navigation.top
+    - navigation.expand
+    - search.suggest
+    - search.highlight
+    - header.autohide
+    - content.code.copy
+    - content.code.select
+    - content.code.annotate
   hljs_languages:
     - yaml
     - java
 
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/ultrabug/mkdocs-static-i18n
+      name: mkdocs-static-i18n on Github
+  analytics:
+    provider: google
+    property: G-J8TC3WPHWC
+
 plugins:
+  - tags:
+      tags_file: tags.md
   - search:
       min_search_length: 2
       separator: '[\s\-\.]+'
+  - i18n:
+      docs_structure: suffix
+      fallback_to_default: true
+      reconfigure_material: true
+      reconfigure_search: true
+      languages:
+        - locale: en
+          default: true
+          name: English
+          build: true
+          site_name: "NoahHsu's SWE Note"
+        - locale: zh-TW
+          name: 繁體中文
+          build: true
+          site_name: "Noah Hsu的軟體工程師筆記"
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
