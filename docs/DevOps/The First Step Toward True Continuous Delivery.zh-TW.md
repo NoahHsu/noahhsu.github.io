@@ -1,6 +1,4 @@
 ---
-hide:
-- tags
 tags:
 - DevOps
 - GitHub Action

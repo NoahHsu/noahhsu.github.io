@@ -1,6 +1,4 @@
 ---
-hide:
-- tags
 tags:
 - DevOps
 - Feature Toggle
@@ -42,7 +40,7 @@ In this part, we will show how to **config the toggle** (take Flagr as an exampl
 
 Given this shared code snippet for the following demos:
 
-```java
+```java title="service.java"
 public static String v1Feature() {
     return BLUE + "o" + RESET;
 }
@@ -194,7 +192,7 @@ To address these complexities, it becomes imperative to introduce an additional 
 
 We won’t cover too much about OpenFeature, but here is the basic key concept that we should know:
 
-### Implementation:
+### Implementation Client:
 - Develop an XxxClient (i.e. flagrClient), or use the SDK provided by the toggle system to be an API Client to send requests to the toggle system.
 
   ``` java
@@ -247,7 +245,7 @@ We won’t cover too much about OpenFeature, but here is the basic key concept t
 
   }
   ```
-### Configuration
+### Configuration Client and OpenFeature
 Then, configure the XxxFeatureProvider to the [OpenFeatureAPI](https://github.com/open-feature/java-sdk/blob/d5a9867365d62bda51b87ff1d13e4f4daaee87cd/src/main/java/dev/openfeature/sdk/OpenFeatureAPI.java) instance, which is designed to have multiple different FeatureProvider (can set/get with name). Here, since I am working on a spring boot, I build a class to contain the OpenFeatureAPI instance.
 
 ``` java
@@ -269,7 +267,7 @@ public class FeatureToggleApiProvider implements InitializingBean {
 
 }
 ```
-### Make Use
+### Make Use of OpenFeature
 
 Finally, other modules can make use of this `OpenFlagrProvider` to perform toggle evaluation by getting a [Client](https://github.com/open-feature/java-sdk/blob/d5a9867365d62bda51b87ff1d13e4f4daaee87cd/src/main/java/dev/openfeature/sdk/Client.java) interface ( not implemented by the XxxClient, but is by [OpenFeatureClient](https://github.com/open-feature/java-sdk/blob/d5a9867365d62bda51b87ff1d13e4f4daaee87cd/src/main/java/dev/openfeature/sdk/OpenFeatureClient.java) which will make use of the given [XxxFeatureProvider](https://github.com/open-feature/java-sdk/blob/d5a9867365d62bda51b87ff1d13e4f4daaee87cd/src/main/java/dev/openfeature/sdk/FeatureProvider.java#L11)):
 
@@ -295,3 +293,4 @@ Deployment strategies and toggle knowledge
 - [https://www.baeldung.com/ops/deployment-strategies](https://www.baeldung.com/ops/deployment-strategies)
 - [https://www.plutora.com/blog/deployment-strategies-6-explained-in-depth](https://www.plutora.com/blog/deployment-strategies-6-explained-in-depth)
 - [https://martinfowler.com/articles/feature-toggles.html](https://martinfowler.com/articles/feature-toggles.html)
+- [https://en.wikipedia.org/wiki/Service_provider_interface](https://en.wikipedia.org/wiki/Service_provider_interface)

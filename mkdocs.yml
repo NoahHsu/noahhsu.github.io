@@ -4,6 +4,7 @@ repo_url: https://github.com/NoahHsu/noahhsu.github.io
 edit_uri: 'edit/main/docs/'
 
 site_author: NoahHsu
+copyright: © 2023-"current year.",  Noah Hsu, All Rights Reserved
 
 theme:
   name: material
@@ -103,3 +104,6 @@ markdown_extensions:
   - pymdownx.superfences
   - attr_list
   - md_in_html
+  - abbr
+  - toc:
+      permalink: true
