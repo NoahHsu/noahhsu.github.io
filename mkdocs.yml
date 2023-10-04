@@ -45,6 +45,8 @@ extra:
       link: https://medium.com/@noahhsu
     - icon: fontawesome/brands/linkedin
       link: www.linkedin.com/in/tzu-ting-hsu-72a32715a
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/noahorsehsu
   analytics:
     provider: google
     property: G-J8TC3WPHWC

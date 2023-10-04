@@ -3,13 +3,15 @@ hide:
 - feedback
 ---
 # Home
+
+![portrait.jpg](assets%2Fhome%2Fportrait.jpg){ align="right" width="200" }
+
 Here is my place to share technical articles about software engineering.
+
+
 
 ## About Me
 I'm a Java Server-Side-Engineer🚀, focusing on Java, Spring Boot, Kafka, Event Sourcing, and DevOps (CI/CD, Toggle System, etc.).
-
-![portrait.jpg](assets%2Fhome%2Fportrait.jpg){ align="middle" width="200" }
-
 
 ## Spotlight
 - [Easier, Flexible, and Lower Resource Cost Deployment Strategies by Feature Toggle](https://noahhsu.github.io/DevOps/Easier%2C%20Flexible%2C%20and%20Lower%20Resource%20Cost%20Deployment%20Strategies%20by%20Feature%20Toggle/)
