@@ -6,7 +6,7 @@ tags:
 ---
 # Say Goodbye to meaningless code for Controller and Service with Spring-Data-Rest
 
-![cover.png](..%2Fassets%2FSpring%20Boot%2FSayGoodBye%2Fcover.png)
+![cover.png](resources%2FSayGoodBye%2Fcover.png){ align = "middle" }
 
 In this article, we will introduce a convenient library, **Spring-Data-Rest** to eliminate your meaningless code in a Spring Boot Application. As we all know, a DB-access API will be implemented as a Controller-Service-Repository stack in a Spring Boot application coding convention. Often, there is no business logic in controllers and services, but only call the next component and return the result. It’s exactly the meaningless code. The Spring-Data-Rest can help us to eliminate it elegantly.
 
@@ -70,17 +70,17 @@ public interface OrderRepository extends JpaRepository<OrderRecord, String> {
 ```
 then we can start the application and see the magic happen:
 
-![swagger_1.png](..%2Fassets%2FSpring%20Boot%2FSayGoodBye%2Fswagger_1.png)
+![swagger_1.png](resources%2FSayGoodBye%2Fswagger_1.png)
 
 we can try the API as below:
 
 - profile API
 
-  ![profile_api_1.png](..%2Fassets%2FSpring%20Boot%2FSayGoodBye%2Fprofile_api_1.png)
+  ![profile_api_1.png](resources%2FSayGoodBye%2Fprofile_api_1.png)
 
 - post entity
 
-  ![post_entity_1.png](..%2Fassets%2FSpring%20Boot%2FSayGoodBye%2Fpost_entity_1.png)
+  ![post_entity_1.png](resources%2FSayGoodBye%2Fpost_entity_1.png)
 
 ---
 
@@ -118,7 +118,7 @@ public interface OrderRepository extends JpaRepository<OrderRecord, String> {
 
 In this way, we can disable the API endpoint that we don’t need.
 
-![swagger_2.png](..%2Fassets%2FSpring%20Boot%2FSayGoodBye%2Fswagger_2.png)
+![swagger_2.png](resources%2FSayGoodBye%2Fswagger_2.png)
 
 ### Specific search API
 Sometimes, we will need some APIs that access the data by other fields instead of the primary key (PK). Then we need to implement some APIs like a search API. In Spring-Date-Rest, that is also covered. we can write a method in the repository class:
@@ -133,7 +133,7 @@ List<OrderEventRecord> findByOrderId(String orderId);
 
 and the corresponding API will be generated (a GET API and the method arguments become query parameters in the request):
 
-![swagger_3.png](..%2Fassets%2FSpring%20Boot%2FSayGoodBye%2Fswagger_3.png)
+![swagger_3.png](resources%2FSayGoodBye%2Fswagger_3.png)
 
 ### Change the path of APIs
 The first thing we can do is change the base path of all API exposed by Spring-Date-Rest. The easiest way is to set it in the properties file (`.yaml` or `.properties`) like below:
@@ -174,7 +174,7 @@ public interface OrderEventRepository extends JpaRepository<OrderEventRecord, Lo
 }
 ```
 
-![swagger_4.png](..%2Fassets%2FSpring%20Boot%2FSayGoodBye%2Fswagger_4.png)
+![swagger_4.png](resources%2FSayGoodBye%2Fswagger_4.png)
 
 One found limitation is that the path in both `@RepositoryRestResource` and `@RestResource` is only supporting one segment (can contain `-`, `_`). In other words, we can only expose APIs on `some/base/api-path/repository-path/method-path`.
 
