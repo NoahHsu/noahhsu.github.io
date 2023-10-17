@@ -9,7 +9,7 @@ tags:
 
 將新版本軟體交付給用戶時，擁有不同的部署策略對於保證以高效率且穩健的方式是非常重要的。 在閱讀完其他文章後，我們可以整理出如下總結（如果您對部署策略不熟悉，請參閱[baeldung blog](https://www.baeldung.com/ops/deployment-strategies)或[plutora blog](https://www.plutora.com/blog/deployment-strategies-6-explained-in-deep)複習一下）：
 
-**Recreate Deployment** 最簡單，但可能會導致服務停機並向所有使用者暴露潛在的 Bug。 其他（**Blue/Green, Rolling, A/B測試, Shadow, Canary**…）可以保證零停機時間，其中一些使用更多資源（Memory, CPU 等硬體資源…）及複雜的設定來實現在同一時間運行兩個版本的應用程式同時為 Release 提供更多信心或更容易回滾到舊版本。
+**Recreate Deployment** 最簡單，但可能會導致服務停機並向所有使用者暴露潛在的 Bug。 其他（**Blue/Green, Rolling, A/B測試, Shadow, Canary**…）可以保證零停機時間，其中一些使用更多的資源（Memory, CPU 等硬體資源…）及複雜的設定來實現在同一時間運行兩個版本的應用程式，來達到同時為 Release 提供更多信心或更容易回滾到舊版本。
 
 然而，我們不應該將硬體資源視為免費或無限的，尤其像現在整個軟體行業陷入困難時。正如[*Pete Hodgson*](https://thepete.net/)在他的文章中所說（[Feature Toggle](https://martinfowler.com/articles/feature-toggles.html)），我們可以使用Feature Toggle系統來執行部署策略，這可以**節省一些資源**。此外，**還可以消除為策略設置CD工具或網路相關元件**（像是Load Balancer等）的繁雜工作（對於一些不熟悉DevOps或SRE知識的開發人員）。唯一剩下的工作就是設置Toggle和寫一些程式（可使用`if/else`或`switch`輕鬆完成）。
 
@@ -32,7 +32,7 @@ tags:
     - **支援請求鍵值 (ID)**：基於請求中的鍵值去決定 Toggle 的評估結果（例如使用 Hash 算法來做到機率分布式的 Toggle)，並確保相同的鍵值總是獲得相同的結果。
     - **支援評估請求的 Body 內容**：可以設置規則以決定 Toggle 的評估結果（例如：當請求的Body中有個屬性`region`=Asia時Toggle開啟；=Europe時Toggle關閉）。
 
-以上是將用Feature Toggle來替代部署策略的最低系統要求。我們可以將流量設定工作轉移到我們的開發工作，還能與功能一起發出 Pull Request (PR) 並一起進行 Code Review。
+以上是將用Feature Toggle來替代部署策略的最低系統要求。如此一來，我們可以將流量設作業轉移到我們的程式開發工作中，還能與功能一起發出 Pull Request (PR) 讓 同事一起進行 Code Review。
 
 ---
 
@@ -198,7 +198,7 @@ System.out.print(message);
 ### 實作 Client 
 - 開發一個 XxxClient（即 flagrClient），或使用 toggle 系統提供的 SDK 作為 API Client，用來向 Toggle 系統發送請求。
 
-  ``` java
+  ``` java title="OpenFlagrClient.java"
   public interface OpenFlagrClient {
 
     String BASE_PATH = "/api/v1/";
@@ -210,9 +210,9 @@ System.out.print(message);
   }
   ```
   
-- 開發一個 [XxxFeatureProvider](https://github.com/open-feature/java-sdk/blob/d5a9867365d62bda51b87ff1d13e4f4daaee87cd/src/main/java/dev/openfeature/sdk/FeatureProvider.java#L11)，他已經列出了常見的（或可能更合理）即時切換評估邏輯的使用方式。
+- 開發一個 [XxxFeatureProvider](https://github.com/open-feature/java-sdk/blob/d5a9867365d62bda51b87ff1d13e4f4daaee87cd/src/main/java/dev/openfeature/sdk/FeatureProvider.java#L11)(Xxx可以是我們所選用的 Toggle 系統名稱)，他已經列出了常見的（或可能更合理）即時切換評估邏輯的使用方式。
 
-  ``` java
+  ``` java title="OpenFlagrProvider.java"
   public class OpenFlagrProvider implements FeatureProvider {
   ...
     public ProviderEvaluation<Boolean> getBooleanEvaluation(String key, 
@@ -252,7 +252,7 @@ System.out.print(message);
 ### 設定 Client 與 OpenFeature
 開發完 `Client` 後，將 XxxFeatureProvider 設定到 [OpenFeatureAPI](https://github.com/open-feature/java-sdk/blob/d5a9867365d62bda51b87ff1d13e4f4daaee87cd/src/main/java/dev/openfeature/sdk/OpenFeatureAPI.java)的 Instance 上，這個 [SPI設計](https://en.wikipedia.org/wiki/Service_provider_interface) 是為了若具有多個不同的 FeatureProvider 時可以透過名稱設定/取得。這邊由於我以 Spring Boot 當作範例，因此我建立了一個 Class 來包含 `OpenFeatureAPI` 的 Instance。
 
-``` java
+``` java title="FeatureToggleApiProvider.java"
 public class FeatureToggleApiProvider implements InitializingBean {
     @Autowired
     FlagrClient flagrClient;
@@ -284,12 +284,12 @@ boolean toggleOn = client.getBooleanValue(FLAG_KEY, false, ctx);
 ```
 
 ### 好處在哪？
-以上是一個大致介紹，說明如何透過 OpenFeature 規範整合 Toggle 系統（詳細內容和完整程式碼請參考我的 [GitHub Repo](https://github.com/NoahHsu/open-feature-openflagr-example/tree/main/client/src/main/java/org/example/open/feature/openflagr/client)）。切換邏輯被提取到另一個抽象層，**主要應用程式保持專注於核心業務和部署策略**。即使有一天我們需要更改 Toggle 系統，應用程式也不需要任何更改，因為我們只需要開發新的 XxxClient 和 XxxFeatureProvider（甚至已經有別人開發好或官方出的版本，所以根本不需要開發工作，可以先看看 [OpenFeature 生態系統](https://openfeature.dev/ecosystem)）。
+以上是對 OpenFeature 一個大致的介紹，說明如何透過 OpenFeature 規範整合 Toggle 系統（詳細內容和完整程式碼請參考我的 [GitHub Repo](https://github.com/NoahHsu/open-feature-openflagr-example/tree/main/client/src/main/java/org/example/open/feature/openflagr/client)）。切換邏輯被提取到另一個抽象層，**主要應用程式保持專注於核心業務和部署策略**。即使有一天我們需要更改 Toggle 系統，應用程式也不需要任何更改，因為我們只需要開發新的 XxxClient 和 XxxFeatureProvider（甚至已經有別人開發好或官方出的版本，所以根本不需要開發工作，可以先找看看 [OpenFeature 生態系/ Market Place](https://openfeature.dev/ecosystem)）。
 
 ---
 
 ## 總結
-在這篇文章中，我們談到了三個需要的重點功能當想要利用 Feature Toggle 來實現**更靈活、更容易且更低成本的方式進行不同的部署策略**。首先，我們的 Toggle 系統應該能夠進行**具有持久性的動態設定**、提供**高效的動態評估方法**、並且評估 API 時應該**支援根據請求的 Body 的鍵值 (ID) 和屬性條件去產生結果**。接著我們展示了不同種類部署策略下的 Toggle 設定和程式碼使用片段。最後介紹了**OpenFeature 抽象層**，使程式碼庫保持整潔，更易於維護和且保有更換的彈性。
+在這篇文章中，首先我們談到了當想要利用 Feature Toggle 來實現**更靈活、更容易且更低成本的方式進行不同的部署策略時所需要的三個重點功能**：第一，是我們的 Toggle 系統應該能夠進行**具有持久性的動態設定**、第二，要能提供**高效的動態評估方法**、第三，評估 API 時應該**支援根據請求的 Body 的鍵值 (ID) 和屬性條件去產生結果**。接著我們展示了不同種類部署策略下的 Toggle 設定和實作程式碼片段。最後介紹了**OpenFeature 規範抽象層**，使程式碼庫保持整潔，更易於維護和且保有更換的彈性。
 
 ### 參考資料
 
