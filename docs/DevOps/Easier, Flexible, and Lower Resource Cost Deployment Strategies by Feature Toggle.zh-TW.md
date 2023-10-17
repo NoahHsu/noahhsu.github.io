@@ -5,7 +5,7 @@ tags:
 - Deployment Strategy
 ---
 # 用Feature Toggle實現簡單、有彈性並較少資源成本的部署策略
-![img.png](cover_image.png)
+![img.png](resources/ToggleDeployment/cover_image.png)
 
 將新版本軟體交付給用戶時，擁有不同的部署策略對於保證以高效率且穩健的方式是非常重要的。 在閱讀完其他文章後，我們可以整理出如下總結（如果您對部署策略不熟悉，請參閱[baeldung blog](https://www.baeldung.com/ops/deployment-strategies)或[plutora blog](https://www.plutora.com/blog/deployment-strategies-6-explained-in-deep)複習一下）：
 

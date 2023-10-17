@@ -5,7 +5,7 @@ tags:
 - Deployment Strategy
 ---
 # Easier, Flexible, and Lower Resource Cost Deployment Strategies by Feature Toggle
-![img.png](cover_image.png)
+![img.png](resources/ToggleDeployment/cover_image.png)
 Having different deployment strategies is essential to ensure that the new version of the software is delivered to users in an efficient and robust way. After reading other articles, we can organize the following summary( If you are not familiar with deployment strategies, please see [this](https://www.baeldung.com/ops/deployment-strategies) or [this](https://www.plutora.com/blog/deployment-strategies-6-explained-in-depth) to get a comprehensive explanation):
 
 The easiest **Recreate Deployment** might cause service downtime and expose potential bugs to all users. Others (**Blue/Green, Rolling, A/B Testing, Shadow, Canary**… ) guarantee zero downtime, and some of them use more resources (hardware like memory, CPU…) to achieve running both versions of the applications at the same time to provide more confidence in a release or easier to rollback to the old version.
@@ -193,9 +193,9 @@ To address these complexities, it becomes imperative to introduce an additional 
 We won’t cover too much about OpenFeature, but here is the basic key concept that we should know:
 
 ### Implementation Client:
-- Develop an XxxClient (i.e. flagrClient), or use the SDK provided by the toggle system to be an API Client to send requests to the toggle system.
+- Develop an XxxClient (Xxx represent the toggle system we choose, i.e. flagrClient), or use the SDK provided by the toggle system to be an API Client to send requests to the toggle system.
 
-  ``` java
+  ``` java title="OpenFlagrClient.java"
   public interface OpenFlagrClient {
 
     String BASE_PATH = "/api/v1/";
@@ -208,7 +208,7 @@ We won’t cover too much about OpenFeature, but here is the basic key concept t
   ```
 - Develop an [XxxFeatureProvider](https://github.com/open-feature/java-sdk/blob/d5a9867365d62bda51b87ff1d13e4f4daaee87cd/src/main/java/dev/openfeature/sdk/FeatureProvider.java#L11), which lists all the common (or maybe the more reasonable) use cases for a real-time toggle evaluation logic.
 
-  ``` java
+  ``` java title="OpenFlagrProvider.java"
   public class OpenFlagrProvider implements FeatureProvider {
   ...
     public ProviderEvaluation<Boolean> getBooleanEvaluation(String key, 
@@ -248,7 +248,7 @@ We won’t cover too much about OpenFeature, but here is the basic key concept t
 ### Configuration Client and OpenFeature
 Then, configure the XxxFeatureProvider to the [OpenFeatureAPI](https://github.com/open-feature/java-sdk/blob/d5a9867365d62bda51b87ff1d13e4f4daaee87cd/src/main/java/dev/openfeature/sdk/OpenFeatureAPI.java) instance, which is designed to have multiple different FeatureProvider (can set/get with name). Here, since I am working on a spring boot, I build a class to contain the OpenFeatureAPI instance.
 
-``` java
+``` java title="FeatureToggleApiProvider.java"
 public class FeatureToggleApiProvider implements InitializingBean {
     @Autowired
     FlagrClient flagrClient;
