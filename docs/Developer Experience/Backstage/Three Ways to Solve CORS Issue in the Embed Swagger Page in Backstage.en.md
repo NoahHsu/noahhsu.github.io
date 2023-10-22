@@ -11,10 +11,10 @@ tags:
 
 As we mentioned in [this article](https://noahhsu.github.io/Developer%20Experience/Backstage/Centralize%20All%20Needed%20Knowledge%20in%20One%20Developer%20Portals%20Through%20Spotify%20Backstage/) before, centralizing all the needed knowledge in one developer portal is a big improvement in daily working experience and convenience.
 
-But we face a [CORS problem](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors) when sending requests by an embedded swagger page in the API definition. this problem will significantly reduce the functionality of swagger page, so this article proposes three ways to solve it:
+But we face a [CORS problem](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors) when sending requests by an embedded swagger page in the API definition. this problem will significantly reduce the functionality of the Swagger page, so this article proposes three ways to solve it:
 1. allow the App to cross-origin for your Backstage domain
 2. provide modified plain-text open API JSON and add proxy
-3. change the server URL when render page and add proxy
+3. change the server URL when rendering pages and add proxy
 
 
 
@@ -29,22 +29,22 @@ After our basic setup in [previous article](https://medium.com/gitconnected/cent
 ![as-is-API.png](assets%2FCorsApi%2Fas-is-API.png)
 
 here we can discover two problems:
-1. the current url is localhost:3000, while the target server url is localhost:8081
-2. the first problem lead to the server response with a CORS error 
+1. the current URL is `localhost:3000`, while the target server URL is `localhost:8081`
+2. the first problem led to the server response with a CORS error 
   ![ai-is-network.png](assets%2FCorsApi%2Fai-is-network.png)
 
-So by default, we can not send request through the embedded Swagger page in the Backstage.
+So by default, we can not send requests through the embedded Swagger page in the Backstage.
 
 ---
 
 ## Solution (To-Be)
-Here I propose three lightweight (little code modified) solutions, we can choose one of them according to the security concern, existing CI/CD process.  
+Here I propose three lightweight (little code modified) solutions, we can choose one of them according to the security concern, and existing CI/CD process.  
 
-### 1. allow CORS in APP 
+### 1. Allow CORS in The APP 
 
 The easiest way is to allow the App to cross-origin for your Backstage domain, if it's OK to modify your app setting, which might have these side effects: 
-1. your app in test env (and add logic to disable it in prod env)
-2. left some code in your codebase like (take my spring boot application for example)
+1. your app in test env (and add logic to disable it in prod env).
+2. left some code in your codebase (take my spring boot application for example).
    ```java title="OrderController.java"
    @RestController
    // to allow only Backstage (domain= http://localhost:3000) to send request
@@ -52,9 +52,9 @@ The easiest way is to allow the App to cross-origin for your Backstage domain, i
    ...
    public class OrderController {...}
    ```
-In this way the swagger page can successfully send request directly to the app.
+In this way, the swagger page can successfully send requests directly to the app.
 
-### 2. provide modified plain-text json, and add proxy
+### 2. provide modified plain-text JSON, and add proxy
 
 #### Needed Modification
 If your open API spec is provided by a static file generated in a CI/CD process, then it is a good way to add a customized step to modify the original URL to Backstage's proxy endpoint, and the Backstage backend will proxy the request and send to your app without a CORS error.
@@ -68,9 +68,9 @@ to enable the proxy setting, we have to rewrite/ add the `servers.url` string wi
     "version": "v0"
   },
   "servers": [
-    { // origin url is http://localhost:8081
+    { // origin URL is http://localhost:8081
       "url": "http://localhost:7007/api/proxy/order-command",
-      "description": "Generated server url"
+      "description": "Generated server URL"
     }
   ],
   ...
@@ -94,7 +94,7 @@ after starting the Backstage, we can first see these logs show the Proxy is crea
 [1] 2023-10-22T09:14:37.849Z proxy info [HPM] Proxy created: /order-command  -> http://localhost:8081 type=plugin
 [1] 2023-10-22T09:14:37.849Z proxy info [HPM] Proxy rewrite rule created: "^/api/proxy/order-command" ~> "/" type=plugin
 ```
-then the url on Swagger will change to the proxy endpoint of Backstage backend.
+then the URL on Swagger will change to the proxy endpoint of the Backstage backend.
 
 ![to-be_2_servers_url.png](assets%2FCorsApi%2Fto-be_2_servers_url.png)
 
@@ -103,7 +103,7 @@ In this case, the request will successfully be sent to the Backstage backend and
 ![to-be_2_request.png](assets%2FCorsApi%2Fto-be_2_request.png)
 
 ### 3. change the server URL when render page and add proxy
-If you have concerns about allowing CORS on App and don't have an existing CI/CD process to generate a static open API file. Then we should use a customized API entity renderer to do the URL modify task in realtime.
+If you have concerns about allowing CORS on the App and don't have an existing CI/CD process to generate a static open API file. Then we should use a customized API entity renderer to do the URL modification task in real time.
 
 #### Needed Modification
 
@@ -161,7 +161,7 @@ proxy:
       '^/api/proxy/http://localhost:8081': 'http://localhost:8081'
 ```
 
-and the only thing we need to modify the `spec.type` to cors-openapi in our API definition yaml. 
+and the only thing we need to modify the `spec.type` to `cors-openapi` in our API definition yaml. 
 
 ```yaml title="order-command-side-api.yaml"
 apiVersion: backstage.io/v1alpha1
@@ -178,7 +178,7 @@ spec:
 
 #### Result
 
-then the url on Swagger will change to the proxy endpoint of the Backstage backend with the original url.
+then the URL on Swagger will change to the proxy endpoint of the Backstage backend with the original URL.
 
 ![to-be_3_servers_url.png](assets%2FCorsApi%2Fto-be_3_servers_url.png)
 
@@ -190,9 +190,9 @@ In this case, the request will also successfully be sent to the Backstage backen
 
 ## Summary
 
-Using the three ways proposed in this article can solve the CORS issue with slight changes in the project or the Backstage app. This will bring more convenience when others integrate/try our API by reading on the Backstage.
+Using three ways proposed in this article can solve the CORS issue with slight changes in the project or the Backstage app. This will bring more convenience when others integrate/try our API by reading on the Backstage.
 
-The developer portal is a very powerful tool to improve developers' experience,  but it also needs some effort to build some guidelines, plugins, or mechanisms on the portal App (i.e. Backstage), which can be done by a platform engineer team or task force. After the hard work, you will find it very worthy to have a well-done developer portal.
+The developer portal is a very powerful tool to improve developers' experience,  but it also needs some effort to build some guidelines, plugins, or mechanisms on the portal App (i.e. Backstage), which can be done by a platform engineering team or task force. After the hard work, you will find it very worthy to have a well-done developer portal.
 
 ### reference
 - CORS problem: [https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors)
