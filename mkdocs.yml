@@ -36,6 +36,7 @@ theme:
   hljs_languages:
     - yaml
     - java
+    - javascript
 
 extra:
   social:
