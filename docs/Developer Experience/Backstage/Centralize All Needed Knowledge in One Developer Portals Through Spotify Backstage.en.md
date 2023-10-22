@@ -150,14 +150,14 @@ definition: |
 
 For now, if we run the Backstage App, we will encounter the URL not allowed to read error. So we have to add the `reading.allow.host` into the `app-config.yaml` in the Backstage project like this as the [tutorial](https://backstage.io/docs/features/software-catalog/descriptor-format#substitutions-in-the-descriptor-format) says:
 
-```yaml title="app-config.yaml
+```yaml title="app-config.yaml"
 backend:
   ...
   reading:
     allow:
       - host: localhost:8081
       - host: localhost:8083
-      ...
+  ...
 ```
 
 As a result, after restarting the Backstage App no longer complain about the issue, and we can browse the API-Doc on Backstage smoothly.
