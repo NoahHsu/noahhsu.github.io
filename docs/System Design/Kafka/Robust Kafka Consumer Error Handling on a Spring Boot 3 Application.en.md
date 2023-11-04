@@ -15,7 +15,7 @@ tags:
 In the [previous article](https://noahhsu.github.io/System%20Design/Kafka/Get%20Kafka%20in%20prod-ready%2C%202%20decisions%20to%20make%20and%203%20implementation%20details/) I shared before, I didn’t show how to implement the error handling in the Kafka consumer for our spring boot application. Since the missing piece is so essential, here I wrote a new article to show how to do the following stuff:
 
 1. **Blocking retry** <br>
-Do retry when retriable exceptions occur during consuming a message, and block the next message.
+Do retry when retryable exceptions occur during consuming a message, and block the next message.
 2. **Non-blocking retry** <br>
 Send the message to another retry topic, when the message exceeds the blocking retry max attempts limit.
 3. **Dead letter queue and handler** <br>
@@ -106,7 +106,7 @@ public void orderEventListener(@Header(KafkaHeaders.RECEIVED_TOPIC) String recei
 }
 ```
 
-There are plenty of properties we can set to control the behavior of retry like max attempts, retry interval, retriable exception, retry topic naming strategy, etc. Please refer to the [document](https://docs.spring.io/spring-kafka/reference/html/#features) for features of `org.springframework.kafka.annotation.RetryableTopic`
+There are plenty of properties we can set to control the behavior of retry like max attempts, retry interval, retryable exception, retry topic naming strategy, etc. Please refer to the [document](https://docs.spring.io/spring-kafka/docs/current/reference/html/#using-the-retryabletopic-annotation) for features of `org.springframework.kafka.annotation.RetryableTopic`
 
 In this way, this KafkaListener method will consume messages from both the original topic and the retry topic. If you really want to distinguish the different logic of the original and retry one, we can get this information from `@Header(KafkaHeaders.RECEIVED_TOPIC) String receivedTopic`. Using other KafkaHeader can also achieve other use cases.
 
@@ -185,5 +185,4 @@ In this article, we address the need for blocking retry, non-blocking retry, and
 I’ve opened the related Pull Request (PR) in my personal repository, feel free to get more details and the complete code [here](https://github.com/NoahHsu/event-sourcing-order-poc/pull/59).
 
 ### Reference
-1. [https://docs.spring.io/spring-kafka/reference/html/#retry-topic](https://docs.spring.io/spring-kafka/reference/html/#retry-topic)
-2. [https://docs.spring.io/spring-kafka/reference/html/#annotation-error-handling](https://docs.spring.io/spring-kafka/reference/html/#annotation-error-handling)
+1. [https://docs.spring.io/spring-kafka/docs/current/reference/html/](https://docs.spring.io/spring-kafka/docs/current/reference/html/)
