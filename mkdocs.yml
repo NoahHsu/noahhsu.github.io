@@ -42,6 +42,8 @@ extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/NoahHsu
+    - icon: simple/buymeacoffee
+      link: https://www.buymeacoffee.com/swbhcjhtyvv
     - icon: fontawesome/brands/medium
       link: https://medium.com/@noahhsu
     - icon: fontawesome/brands/linkedin
