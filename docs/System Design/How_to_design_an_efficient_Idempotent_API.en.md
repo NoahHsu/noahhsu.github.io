@@ -39,6 +39,8 @@ Engaging in a retry without protection could potentially lead to critical issues
 
 Implementing an idempotent API stands as one of the solutions to establish a **safe-retry mechanism, ensuring the provision of a robust API and a resilient system**.
 
+---
+
 ## How to improve performance
 
 A traditional idempotency API solely relies on the database (DB) to verify whether a request has been previously processed, which is an extra workload for the DB that could cause a bad performance for our API. 
@@ -76,7 +78,7 @@ subgraph no cached exist
 end
 ```
 
-In the above mechanism, We have **8 processes and 5 decision points**. Note that this whole **flow should be place after the auth-filter** to prevent unauth request get the cached data. Now, let's delve into each of them individually (P for process; D for Decision):
+In the above mechanism, We have **8 processes and 5 decision points**. Note that this whole **flow should be placed after the auth-filter** to prevent an unauth request from getting the cached data. Now, let's delve into each of them individually (P for process; D for Decision):
 
 ### Main Flow 
 - **P1: Request with `rid`** <br>
@@ -88,27 +90,27 @@ In the above mechanism, We have **8 processes and 5 decision points**. Note that
 - **P4: init cache with `rid`** <br>
   If no cache exists, the first step is to create one with an `is-done` property set to `false`. This operation should occur within the same transaction as D1 to prevent race conditions, possibly using methods like `setIfAbsent` in the Java Redis client or `setnx` in Redis.
 - **D3: Is `rid` exist in DB** <br>
-  Then before we really handle the request, we still need to check whether the request is proceeded previously, in order to prevent duplication. 
-- **P5: do original API process** <br>
+  Then before we really handle the request, we still need to check whether the request has proceeded previously, in order to prevent duplication. 
+- **P5: Do the original API process** <br>
   In the absence of cache or DB records, the original process should be executed to handle the request.
 - **D4: Is process success** <br>
   Upon handling the request, different reactions are triggered based on the process result. Successful execution leads to cache update and response to the caller. Otherwise, detailed error checking is necessary to decide what to do next.
 - **D5: Is error retryable** <br>
   Proper exception handling is crucial in categorizing errors as retryable or non-retryable. Retryable errors include network errors to the 3rd-party API or other data sources, file systems, etc. Non-retryable errors, such as validation errors, internal-server errors, etc. require code modification or settings adjustment for successful retries.  
 - **P6: Update cache** <br>
-  Upon obtaining a definitive result (success or non-retryable error), the cache is updated with the actual response, and setting `is-done` to `true`.
+  Upon obtaining a definitive result (success or non-retryable error), the cache is updated with the actual response and setting `is-done` to `true`.
 - **P7: Delete cache** <br>
   For retryable errors, the cache should be deleted, anticipating the handling of retry requests.
 - **P8: Return response** <br>
   Regardless of the process outcome, responding to the caller is essential.
 
-### Subflow2: When cache exist
+### Subflow2: When cache exists
 - **D2: Is Done** <br>
   Retrieve the cache value and inspect the `is-done` property, which was set or updated during the Subflow1.
 - **P2: Return cached response** <br>
-  If the `is-done` properties in the cache is `ture`, indicating a previously completed request, promptly return the cached response.
+  If the `is-done` properties in the cache is `ture`, indicating a previously completed request, and promptly returning the cached response.
 - **P3: return in-process error** <br>
-  If the `is-done` properties in the cache is `false`, means the request is now being executed, in order to prevent race condition or some other multi-thread issue, we should return an error code to inform the caller about the request is in-progress and advise trying again later.
+  If the `is-done` properties in the cache is `false`, means the request is now being executed, in order to prevent race conditions or some other multi-thread issue, we should return an error code to inform the caller that the request is in progress and advise trying again later.
 
 ## Summary
 This article introduces an idempotency mechanism that collaborates with a cache server to enhance performance. Here are some crucial points to consider during implementation:
@@ -116,7 +118,7 @@ This article introduces an idempotency mechanism that collaborates with a cache 
 1. **Unique Request Identifier (`rid`)**:<br>
   Clients must include a rid in their requests, ensuring it's distinctive enough to identify each request uniquely.
 2. **Placement after Auth-Filter**:<br>
-   The Idempotency flow should be positioned after the authentication filter for security concern.
+   The Idempotency flow should be positioned after the authentication filter for security concerns.
 3. **Atomic Cache Operations**:<br>
    Checking for cache existence and creating cache entries should occur atomically to ensure consistency.
 4. **DB Integration for Non-existent Cache**:<br>
