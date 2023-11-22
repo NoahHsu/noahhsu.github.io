@@ -5,7 +5,7 @@ tags:
 - System Design
 - Data Consistency
 ---
-# How to design an efficiency Idempotency API
+# How to design an efficient Idempotent API
 
 Idempotency API means that the **data/ system state will be the same no matter how many times the API is successfully called** with the same request body/parameter.
 
