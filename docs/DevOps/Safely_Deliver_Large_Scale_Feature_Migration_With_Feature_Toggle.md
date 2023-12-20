@@ -6,11 +6,11 @@ In this article, we will mainly describe how to develop, test, and release an LS
 
 
 ## Large Scale Change
-What's a Large-Scale Change (LSC)? the definition in the book [Software Engineering at Google](https://www.oreilly.com/library/view/software-engineering-at/9781492082781/ch22.html) is like, a change that should be a single commit logically, due to some constraints (merge conflict, testing resources, etc.) that turn out to be many separately commits to the codebase. During the project life cycle, we often encounter some of them, which might be the migration from an old API vendor to a new one, upgrade of the used Library, deprecating old paradigms and adopt new ones, this is usually a so-called Large Scale Change.
+What's a Large-Scale Change (LSC)? the definition in the book [Software Engineering at Google](https://www.oreilly.com/library/view/software-engineering-at/9781492082781/ch22.html) is like, a change that should be a single commit logically, due to some constraints (merge conflict, testing resources, etc.) that turn out to be many separate commits to the codebase. During the project life cycle, we often encounter some of them, which might be the migration from an old API vendor to a new one, upgrade of the used Library, deprecating old paradigms and adopt new ones, this is usually a so-called Large Scale Change.
 
 Most of these updates have a large impact, and may also include the Critical User Journey (CUJ) of the system. Since there might be a certain degree of uncertainty in the new version's logic, performance, and implementation details, it can lead to the need to spend more time doing research and testing before gaining enough confidence to deploy to the production environment. Or in the worst case, no one dares to make any changes. So, it's the time for feature toggle to help.
 
-### What kind of LSC can be cover
+### What kind of LSC can be covered
 
 First, we should briefly divide the LSC into two categories: logic-level and compiler-level. The main difference is whether we can include both versions of code in a single deployable artifact.
 For example, a dependency version upgrade in a Java Maven Project is a compiler-level change (i.e. upgrade spring boot2.6 to spring boot 3.1). On the other hand, migrating usage in the codebase from the Google Map API to the other API vendor, or refactoring all String concat to StringBuilder, are both logic-level changes.
@@ -21,8 +21,8 @@ Therefore, for logic-level change, we could apply some mechanisms using Feature 
 ## How can Feature Toggle helps LSC
 According to the article, [Feature Toggles](https://martinfowler.com/articles/feature-toggles.html) in MartinFowler.com, we have four kinds of toggle, Release, Permission, Ops, and Experiment. Assuming we need to migrate all features from integrating the API vendor A to integrating the API vendor B. Then, we will use three kinds of toggles to optimize the process of switching API vendors.
 
-1. **Release Toggle**:<br>
-  Use Release Toggle to ensure that programs using vendor B's ARI will not be executed for all real cases even if the code is merged into the main branch and deployed to production.
+**Release Toggle**:<br>
+Use Release Toggle to ensure that programs using vendor B's ARI will not be executed for all real cases even if the code is merged into the main branch and deployed to production.
 
   
 ```mermaid
@@ -46,8 +46,8 @@ sequenceDiagram
 ```
 
 
-2. **Permission Toggle**:<br>
-   At the same time, with a Permission Toggle. Testers can test by a specific user (i.e. test account) whether the features integrated with vendor B's API work well.
+**Permission Toggle**:<br>
+At the same time, with a Permission Toggle. Testers can test by a specific user (i.e. test account) whether the features integrated with vendor B's API work well.
 
 ```mermaid
 ---
@@ -69,8 +69,8 @@ sequenceDiagram
     deactivate B
 ```
 
-3. **Ops Toggle**:<br>
-  Use Ops Toggle to implement Canary Release. Ensuring that after all functions are completed, it will be available to a low percentage of real users at first. If there are no problems, increase the percentage of user for using new function.
+**Ops Toggle**:<br>
+Use Ops Toggle to implement Canary Release. Ensuring that after all functions are completed, it will be available to a low percentage of real users at first. If there are no problems, increase the percentage of users using the new function.
 
 ```mermaid
 ---
@@ -94,32 +94,9 @@ sequenceDiagram
 
 ### Migration and Toggle Schedule
 
-With the three toggles above, we can say that the flow of an API vendor migration contains following stage: **First PR Merged**, **Start Testing**, **Dev Completed**, **Production Test Complete**, **Production Stable**, and **Remove Toggle Code**. Then we can activate/deactivate the toggles to safely release the feature migration. The schedule will be like below:
+With the three toggles above, we can say that the flow of an API vendor migration contains the following stages: **First PR Merged**, **Start Testing**, **Dev Completed**, **Production Test Complete**, **Production Stable**, and **Remove Toggle Code**. Then we can activate/deactivate the toggles to safely release the feature migration. The schedule will be like below:
 
-```mermaid
-gantt
-  title Migration and Toggle Schedule 
-  dateFormat YYYY-MM-DD
-  section Flow
-    First PR Merged              : milestone, 2014-01-01,
-    Start Testing                  : milestone, 2014-01-7,
-    Dev Completed               : milestone, 2014-01-14,
-    Production Test Complete    : milestone, 2014-01-21,
-    Production Stable                 : milestone, 2014-01-31,
-    Remove Toggle Code          : milestone, 2014-02-07,
-  section Release <br>Toggle
-    Toggle off          :a , 2014-01-01, 20d
-    Transform to Ops Toggle    : milestone, after a
-  section Permission <br>Toggle
-    Toggle on for new tester :2014-01-7, 31d
-    Toggle off for old tester    :2014-01-7, 31d
-  section Ops Toggle
-    Open 25% :after a, 2d
-    Open 50%    :2d
-    Open 75%    :2d
-    Open 100%    :8d
-    
-```
+![migration_schedule.png](resources%2FToggleDeployment%2Fmigration_schedule.png)
 
 Here are some notable key points (given we have a `fooService` that will use both`vendorAStrategy` integrated with vendor A API, and `vendorBStrategy` integrated with vendor B’s API.):
 
