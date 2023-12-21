@@ -10,7 +10,7 @@ What's a Large-Scale Change (LSC)? the definition in the book [Software Engineer
 
 Most of these updates have a large impact, and may also include the Critical User Journey (CUJ) of the system. Since there might be a certain degree of uncertainty in the new version's logic, performance, and implementation details, it can lead to the need to spend more time doing research and testing before gaining enough confidence to deploy to the production environment. Or in the worst case, no one dares to make any changes. So, it's the time for feature toggle to help.
 
-### What kind of LSC can be covered
+### What kind of LSC can be covered?
 
 First, we should briefly divide the LSC into two categories: logic-level and compiler-level. The main difference is whether we can include both versions of code in a single deployable artifact.
 For example, a dependency version upgrade in a Java Maven Project is a compiler-level change (i.e. upgrade spring boot2.6 to spring boot 3.1). On the other hand, migrating usage in the codebase from the Google Map API to the other API vendor, or refactoring all String concat to StringBuilder, are both logic-level changes.
@@ -18,7 +18,7 @@ Therefore, for logic-level change, we could apply some mechanisms using Feature 
 
 ---
 
-## How can Feature Toggle helps LSC
+## How can Feature Toggle help LSC?
 According to the article, [Feature Toggles](https://martinfowler.com/articles/feature-toggles.html) in MartinFowler.com, we have four kinds of toggle, Release, Permission, Ops, and Experiment. Assuming we need to migrate all features from integrating the API vendor A to integrating the API vendor B. Then, we will use three kinds of toggles to optimize the process of switching API vendors.
 
 **Release Toggle**:<br>
@@ -263,7 +263,7 @@ public class VendorAV1ServiceImpl implements VendorService {
 }
 ```
 
-also we implement the `VendorBV1ServiceImpl` similar to `VendorAV1ServiceImpl` except the accept logic is only when `isToggleOn` is true and the vendor is normal. Here, given the logic of each step is complex in this strategy, so that we can only implement the step1 like below: 
+also, we implement the VendorBV1ServiceImpl similar to VendorAV1ServiceImpl except the accept logic is only when isToggleOn is true and the vendor is normal. Here, given the logic of each step is complex in this strategy, we can just implement the step1 and release this version to production like the below:
 
 ```java title="VendorBV1ServiceImpl.java"
 @Service
