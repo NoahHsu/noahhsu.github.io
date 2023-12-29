@@ -102,7 +102,7 @@ Here are some notable key points (given we have a `fooService` that will use bot
 
 1. After merging the first PR containing vendor B strategy, we should use a release toggle to ensure all real traffic goes to `vendorAStrategy` and no real user is affected.
 
-2. When testers want to test the feature integrated with vendor B’s API, we should set up a permissions toggle to make a specific user will trigger the `vendorAStrategy`.
+2. When testers want to test the feature integrated with vendor B’s API, we should set up a permissions toggle to make a specific user will trigger the `vendorBStrategy`.
 
 3. For the regression or automatic test, we should add a permissions toggle to let a second user which will always trigger the vendor A strategy. That can make sure the vendor A strategy is working fine.
 
@@ -155,7 +155,7 @@ public interface VendorService {
 }
 ```
 
-For, the `VendorServiceFactory` we will inject all class that implements the VendorService interface. When every time we need to find the target vendor, we loop all of them to see whether each VendorStrategy implementation can handle the request. (Noted: the order in the list becomes important when there is any overlay in the `accept` logic between different strategies. please refer to this article to handle the order issue).
+For, the `VendorServiceFactory` we will inject all class that implements the VendorService interface. When every time we need to find the target vendor, we loop all of them to see whether each VendorStrategy implementation can handle the request. (Noted: the order in the list becomes important when there is any overlay in the `accept` logic between different strategies. please refer to [this article](https://stackoverflow.com/questions/16967971/spring-ordered-list-of-beans) to handle the order issue).
 
 ```java title="VendorServiceFactory.java"
 @Service
@@ -263,7 +263,7 @@ public class VendorAV1ServiceImpl implements VendorService {
 }
 ```
 
-also, we implement the VendorBV1ServiceImpl similar to VendorAV1ServiceImpl except the accept logic is only when isToggleOn is true and the vendor is normal. Here, given the logic of each step is complex in this strategy, we can just implement the step1 and release this version to production like the below:
+also, we implement the VendorBV1ServiceImpl similar to VendorAV1ServiceImpl except the `accept` logic is only when isToggleOn is true and the user is normal. Here, given the logic of each step is complex in this strategy, we can just implement the step1 and release this version to production like the below:
 
 ```java title="VendorBV1ServiceImpl.java"
 @Service
@@ -305,7 +305,7 @@ Meanwhile, we use the toggle system (here we use [OpenFlagr](https://github.com/
 
 ![first_pr_UI.png](resources%2FToggleDeployment%2Ffirst_pr_UI.png)
 
-Then, we can make 50 users (`id % 10 == 0` is the VIP users, which would print a purple string) call all the steps in fooService and all the normal users would go to use `vendorAV1Strategy`, which prints a blue string in the console.
+Then, we can make 50 users (`id % 10 == 0` is the VIP users, which would print a purple string) call all the steps in `fooService` and all the normal users would go to use `vendorAV1Strategy`, which prints a blue string in the console.
 ![first_pr.png](resources/ToggleDeployment/first_pr.png)
 
 #### Start Testing
