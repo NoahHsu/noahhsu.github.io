@@ -98,6 +98,32 @@ With the three toggles above, we can say that the flow of an API vendor migratio
 
 ![migration_schedule.png](resources%2FToggleDeployment%2Fmigration_schedule.png)
 
+<!---
+```mermaid
+gantt
+  title  改版 與 Toggle 時間表 
+  dateFormat YYYY-MM-DD
+  section Flow
+      First PR Merged                    : milestone, 2014-01-01,
+      Start Testing                  : milestone, 2014-01-7,
+      Dev Completed               : milestone, 2014-01-14,
+      Production Test Complete    : milestone, 2014-01-21,
+      Production Stable                 : milestone, 2014-01-31,
+      Remove Toggle Code          : milestone, 2014-02-07,
+  section Release <br>Toggle
+    Toggle off          :a , 2014-01-01, 20d
+    轉換為 Ops Toggle    : milestone, after a
+  section Permission <br>Toggle
+    Toggle on for 新功能測試者 :2014-01-7, 31d
+    Toggle off for 舊功能測試者    :2014-01-7, 31d
+  section Ops Toggle
+    Open 25% :after a, 2d
+    Open 50%    :2d
+    Open 75%    :2d
+    Open 100%    :8d
+```
+-->
+
 Here are some notable key points (given we have a `fooService` that will use both`vendorAStrategy` integrated with vendor A API, and `vendorBStrategy` integrated with vendor B’s API.):
 
 1. After merging the first PR containing vendor B strategy, we should use a release toggle to ensure all real traffic goes to `vendorAStrategy` and no real user is affected.

@@ -6,7 +6,7 @@
 
 在本文中，我們將主要描述如何利用 Feature Toggle 來安全地開發、測試和發布大規模變更。
 從定義 LSC 的概念開始，解釋為何它需要 Feature Toggle 的幫助，以及可以涵蓋哪些類型的 LSC。
-接下來，我們將介紹我們將使用的 Feature Toggle 類型，並概述遷移計劃。
+接下來，我們將介紹我們將使用的 Feature Toggle 類型，並概述 改版 計劃。
 最後，我們將展示在開發、測試和發布階段如何處理程式碼和 Feature Toggle 設定，並提供一個簡單的示範。
 讓我們開始吧！
 
@@ -14,7 +14,7 @@
 
 大規模變更指的是在軟體開發中應該在邏輯上是單一個獨立的提交 (commit)，
 但由於某些限制（例如合併衝突、測試資源等），最終被拆解成多個獨立提交到程式碼庫的變更。
-在專案生命週期中，我們常常會遇到這樣的情況，例如從舊的 API 供應商遷移到新的供應商、
+在專案生命週期中，我們常常會遇到這樣的情況，例如從舊的 API 供應商 改版 到新的供應商、
 升級已使用的程式庫、淘汰舊的範式並採用新的範式等，這通常被稱為大規模變更。
 
 這些更新通常會對系統產生較大的影響，可能也涉及到系統的關鍵使用者流程（CUJ）。
@@ -27,7 +27,7 @@
 首先，我們可以簡單將大規模變更分為兩種類型：邏輯層級和編譯器層級。
 主要的區別在於我們是否能夠將兩個版本的程式碼包含在單個可部署的構建專案中。
 例如，在 Java Maven 專案中的依賴版本升級屬於編譯器層級的變更（例如從 spring boot 2.6 升級到 spring boot 3.1）。
-另一方面，從 Google 地圖 API 遷移到其他地圖 API 供應商的程式碼庫中的使用方式，或者將所有 `String.concat` 改為使用 `StringBuilder`，都屬於邏輯層級的變更。
+另一方面，從 Google 地圖 API  改版 到其他地圖 API 供應商的程式碼庫中的使用方式，或者將所有 `String.concat` 改為使用 `StringBuilder`，都屬於邏輯層級的變更。
 因此，對於邏輯層級的變更，我們可以應用一些機制，例如使用 Feature Toggle，以幫助使流程更輕鬆且更具信心。
 對於編譯器層級的變更，我們現在只能使用一些硬體層面的部署策略（例如藍綠部署、影子部署）來使其更安全。
 
@@ -114,14 +114,16 @@ sequenceDiagram
     deactivate B
 ```
 
-### 遷移與 Toggle 時間表
-利用上述的三種 Toggle，我們可以將 API 供應商遷移的流程分為以下幾個階段：
+###  改版 與 Toggle 時間表
+利用上述的三種 Toggle，我們可以將 API 供應商 改版 的流程分為以下幾個階段：
 首次 PR 合併、開始測試、開發完成、正式環境測試完成、正式環境穩定以及移除 Toggle 程式碼。
-接下來，我們可以啟用/停用 Toggle，以安全地釋出功能遷移。時間表如下：
+接下來，我們可以啟用/停用 Toggle，以安全地釋出功能 改版 。時間表如下：
 
+![migration_schedule_twzh.png](resources%2FToggleDeployment%2Fmigration_schedule_twzh.png)
+<!---
 ```mermaid
 gantt
-  title 遷移與 Toggle 時間表 
+  title  改版 與 Toggle 時間表 
   dateFormat YYYY-MM-DD
   section Flow
       首次 PR 合併                    : milestone, 2014-01-01,
@@ -141,8 +143,8 @@ gantt
     Open 50%    :2d
     Open 75%    :2d
     Open 100%    :8d
-    
 ```
+-->
 
 這些是一些值得注意的關鍵點（假設我們有一個 `fooService`，
 它將使用 `vendorAStrategy` 整合供應商 A API，以及 `vendorBStrategy` 整合供應商 B API）：
@@ -158,7 +160,7 @@ gantt
 ## 程式實作與 Demo
 
 在這部分，我們將展示如何實現策略模式來解決多供應商邏輯，並使用 Toggle 來幫助在運行時進行切換執行的策略，
-以執行上述的遷移計劃。 （您可以看我針對這次文章的
+以執行上述的 改版 計劃。 （您可以看我針對這次文章的
 [GitHub commit](https://github.com/NoahHsu/open-feature-openflagr-example/commit/48e64ba217adc13bae479ee11360ee93f8b5fbae)
 來了解更多詳細信息）
 
@@ -285,7 +287,7 @@ public class VendorAV1ServiceImpl implements VendorService {
 
 ### 程式改變 & Toggle 設定
 
-在這裡，我們將展示在遷移過程中舊的 `VendorAV1ServiceImpl` 和新策略 `VendorBV1ServiceImpl` 中的代碼更改。它們都為 `FooService` 的「普通」用戶提供服務。讓我們開始吧！
+在這裡，我們將展示在 改版 過程中舊的 `VendorAV1ServiceImpl` 和新策略 `VendorBV1ServiceImpl` 中的代碼更改。它們都為 `FooService` 的「普通」用戶提供服務。讓我們開始吧！
 
 #### 首次 PR 合併
 
@@ -401,7 +403,7 @@ public class VendorBV1ServiceImpl implements VendorService {
 當這個版本部署到正式環境後，我們也可以在 Toggle 系統中刪除 Toggle 設置。
 
 ## 總結
-在本文中，我們提出了一個包含三種 Toggle 的遷移時間表，從開發到測試和釋出的管理。最後，我們可以看到 Feature Toggle 在使大規模變更更加輕鬆靈活方面的威力。值得注意的是，一旦功能開發工作完成，我們就不需要更改任何代碼，但仍然可以管理測試和金絲雀釋出的功能執行。
+在本文中，我們提出了一個包含三種 Toggle 的 改版 時間表，從開發到測試和釋出的管理。最後，我們可以看到 Feature Toggle 在使大規模變更更加輕鬆靈活方面的威力。值得注意的是，一旦功能開發工作完成，我們就不需要更改任何代碼，但仍然可以管理測試和金絲雀釋出的功能執行。
 
 ### 參考資料
 - [_**Large-Scale Changes**_ from _Software Engineering at Google_, by Lisa Carey, in O'REILLY](https://www.oreilly.com/library/view/software-engineering-at/9781492082781/ch22.html)
