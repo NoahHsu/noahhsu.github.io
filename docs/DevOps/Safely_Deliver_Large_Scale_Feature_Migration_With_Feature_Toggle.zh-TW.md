@@ -149,10 +149,10 @@ gantt
 這些是一些值得注意的關鍵點（假設我們有一個 `fooService`，
 它將使用 `vendorAStrategy` 整合供應商 A API，以及 `vendorBStrategy` 整合供應商 B API）：
 
-1. 在合併包含 `vendorBStrategy` 的首個 PR 後，我們應該使用一個 Ops Toggle 來確保所有真實流量都走向 `vendorAStrategy`，並且不會影響任何真實使用者。 
+1. 在合併包含 `vendorBStrategy` 的首個 PR 後，我們應該使用一個 Release Toggle 來確保所有真實流量都走向 `vendorAStrategy`，並且不會影響任何真實使用者。 
 2. 當測試人員想要測試與供應商 B API 整合的功能時，我們應該設置一個 Permission Toggle，讓特定使用者觸發 `vendorBStrategy`。 
 3. 對於回歸測試或自動化測試，我們應該添加一個 Permission Toggle，讓第二個使用者始終觸發 `vendorAStrategy`。這可以確保供應商 A 策略運作正常。
-4. 當 `vendorBStrategy` 中的所有功能都完成並通過測試後，我們將 Ops Toggle 更改為 Ops Toggle，執行金絲雀部署。 
+4. 當 `vendorBStrategy` 中的所有功能都完成並通過測試後，我們將 Release Toggle 更改為 Ops Toggle，執行金絲雀部署。 
 5. 在正式環境穩定運行後，我們應該清理包含 Toggle 邏輯的程式碼，使程式碼庫保持簡潔。
 
 --- 
@@ -360,7 +360,7 @@ public class VendorBV1ServiceImpl implements VendorService {
 
 #### 開始測試
 
-當測試人員想要測試 `VendorBV1ServiceImpl` 是否運作良好時，我們不需要更改任何代碼，只需要添加一個 Permission Toggle，以啟用 `VendorBV1ServiceImpl` 针对某些特定的試驗使用者（例如使用 `userId = 1`）。請注意，這個 Permission Toggle 應該在 Ops Toggle 之前進行評估。
+當測試人員想要測試 `VendorBV1ServiceImpl` 是否運作良好時，我們不需要更改任何代碼，只需要添加一個 Permission Toggle，以啟用 `VendorBV1ServiceImpl` 針對某些特定的試驗使用者（例如使用 `userId = 1`）。請注意，這個 Permission Toggle 應該在 Release Toggle 之前進行評估。
 
 ![start_test_UI.png](resources%2FToggleDeployment%2Fstart_test_UI.png)
 
@@ -379,7 +379,7 @@ public class VendorBV1ServiceImpl implements VendorService {
 
 ![prod_test_complete.png](resources%2FToggleDeployment%2Fprod_test_complete.png)
 
-測試完成並修復了錯誤後，我們可以通過移除 Ops Toggle 並將其轉換為 Ops Toggle 來開始金絲雀釋出（它應該在所有 Permission Toggle 之後仍然進行評估）。
+測試完成並修復了錯誤後，我們可以通過移除 Release Toggle 並將其轉換為 Ops Toggle 來開始金絲雀釋出（它應該在所有 Permission Toggle 之後仍然進行評估）。
 
 #### 正式環境穩定
 
