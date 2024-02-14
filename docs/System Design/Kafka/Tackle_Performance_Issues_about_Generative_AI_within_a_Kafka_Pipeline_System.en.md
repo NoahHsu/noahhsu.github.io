@@ -20,7 +20,7 @@ To ensure a better user experience, it's common to build an asynchronous system 
 
 ---
 
-## Asynchronous System integrating Generative AI
+## Asynchronous System Integrating Generative AI
 
 Let's say we are building a system that provides an AI model for generating slides according to users' original images, style selection, and extra descriptions.
 
@@ -112,7 +112,7 @@ At first, we constructed a system based on the above architecture, primarily usi
 
 ### 1. The Producers Unevenly Distributed Events among Kafka Partitions
 
-This situation is related to the [producer's kafka client partitioner](https://github.com/apache/kafka/blob/trunk/clients/src/main/java/org/apache/kafka/clients/producer/internals/DefaultPartitioner.java), have a glance in its class document below first:
+This situation is related to the [producer's Kafka client partitioner](https://github.com/apache/kafka/blob/trunk/clients/src/main/java/org/apache/kafka/clients/producer/internals/DefaultPartitioner.java), have a glance at its class document below first:
 
 > The default partitioning strategy:
 > <ul>
@@ -121,30 +121,30 @@ This situation is related to the [producer's kafka client partitioner](https://g
 > <li>If no partition or key is present choose the sticky partition that changes when the batch is full.
 > See KIP-480 for details about sticky partitioning.
 
-When the batch-send mechanism is enabled using batch.size and linger.ms, and no key is provided for each event, the default partitioner will assign all the events in the same batch to a single partition (For more details, please refer to [KIP-480](https://cwiki.apache.org/confluence/display/KAFKA/KIP-480%3A+Sticky+Partitioner) and [sticky partitioning](https://github.com/apache/kafka/blob/trunk/clients/src/main/java/org/apache/kafka/clients/producer/internals/StickyPartitionCache.java)).
+When the batch-send mechanism is enabled using `batch.size` and `linger.ms`, and no key is provided for each event, the default partitioner will assign all the events in the same batch to a single partition (For more details, please refer to [KIP-480](https://cwiki.apache.org/confluence/display/KAFKA/KIP-480%3A+Sticky+Partitioner) and [sticky partitioning](https://github.com/apache/kafka/blob/trunk/clients/src/main/java/org/apache/kafka/clients/producer/internals/StickyPartitionCache.java)).
 
 ![sticky_partitioning.png](assets%2FKafka_GEN_AI%2Fsticky_partitioning.png)
 
 This issue becomes particularly prominent during peak requests, as numerous requests arrive within a short period. When the message size is too small to reach the batch size, all events within the linger time become jammed in the same partition
 
-This behavior causes a serious uneven workload problem among consumers. We control the number of consumers based on the maximum acceptable concurrent requests of the AI API. Therefore, we cannot afford for some consumers to remain inactive during peak times, as this worsen the bottleneck in the AI API.
+This behavior causes a serious uneven workload problem among consumers. We control the number of consumers based on the maximum acceptable concurrent requests of the AI API. Therefore, we cannot afford for some consumers to remain inactive during peak times, as this worsens the bottleneck in the AI API.
 
 ### 2. The Consumers Frequently Experienced Unnecessary Rebalancing and Event Double-consumption
 
-This situation is primary related to the long processing time of the Generative AI API and is also involves the heartbeat, polling, and rebalancing mechanism of Kafka consumers. Let's begin by understanding the definitions of heartbeat and rebalance:
+This situation is primarily related to the long processing time of the Generative AI API and also involves the heartbeat, polling, and rebalancing mechanism of Kafka consumers. Let's begin by understanding the definitions of heartbeat and rebalance:
 
 > Heartbeats are sent when the consumer polls (i.e., retrieves records) and when it commits records it has consumed.
 
 > If the consumer stops sending heartbeats for long enough, its session will time out and the group coordinator will consider it dead and trigger a rebalance.
 
-(After the [KIP-62](https://cwiki.apache.org/confluence/display/KAFKA/KIP-62%3A+Allow+consumer+to+send+heartbeats+from+a+background+thread), they decouple the heartbeat from the `poll` and `commit offset`, the client will keep sending heartbeat before exceeding the `max.poll.interval.ms`.)
+(After the [KIP-62](https://cwiki.apache.org/confluence/display/KAFKA/KIP-62%3A+Allow+consumer+to+send+heartbeats+from+a+background+thread), they decouple the heartbeat from the `poll` and `commit offset`, the client will keep sending heartbeats before exceeding the `max.poll.interval.ms`.)
 
 
 In our scenario, with the default setting of [`session.timeout.ms`](https://kafka.apache.org/documentation/#consumerconfigs_session.timeout.ms), [`max.poll.interval.ms`](https://kafka.apache.org/documentation/#consumerconfigs_max.poll.interval.ms), [`max.poll.records`](https://kafka.apache.org/documentation/#consumerconfigs_max.poll.records), and consumer `ack-mode` set to `Manual` (or `Batch` in default). The flow related to them will look like below:
 
 ![Consumer default.gif](assets%2FKafka_GEN_AI%2FConsumer_timeout.gif)
 
-After the session timeout, the entire consumer group will start to rebalance (for more details, refer to this [article](https://www.verica.io/blog/understanding-kafkas-consumer-group-rebalancing/)), causing consumption pause temporarily (for a few seconds or even minutes). Moreover, the offsets of handled events cannot be committed to the broker, leading to the re-consumption of these events after rebalancing.
+After the session timeout, the entire consumer group will start to rebalance (for more details, refer to this [article](https://www.verica.io/blog/understanding-kafkas-consumer-group-rebalancing/)), causing consumption to pause temporarily (for a few seconds or even minutes). Moreover, the offsets of handled events cannot be committed to the broker, leading to the re-consumption of these events after rebalancing.
 
 ---
 ## How to solve the problems
@@ -157,10 +157,10 @@ In the following sections, we'll explore the options available to address these 
 
 We aim to solve the issue of uneven distribution of events to Kafka partitions by adjusting the producer settings. After analyzing the problem, we have identified two potential solutions:
 
-1. **Reducing the `linger.ms` and `batch.size`**:<br> This make the producer to reduce the number of events sent to a single partition in one batch.
+1. **Reducing the `linger.ms` and `batch.size`**:<br> This makes the producer reduce the number of events sent to a single partition in one batch.
 2. **Assigning a unique event key to each event**:<br> This approach allows the partitioner to distribute events across partitions based on the hash of the key.
 
-While option 1 may result in fewer events per batch and increased network traffic, it's important to note that the sticky partitioning strategy still may push event unevenly since it only ensures that the new batch is not sent to the same partition as the previous one. 
+While option 1 may result in fewer events per batch and increased network traffic, it's important to note that the sticky partitioning strategy still may push events unevenly since it only ensures that the new batch is not sent to the same partition as the previous one. 
 
 Therefore, we opt for option 2—assigning every event an event key. This ensures that events are aggregated in batches for partitions with the same leader broker.
 
@@ -201,5 +201,5 @@ Producer:
 Consumer:
 
 - [**_Chapter 4. Kafka Consumers: Reading Data from Kafka_**, in O'REILLY](https://www.oreilly.com/library/view/kafka-the-definitive/9781491936153/ch04.html)
-- [**_difference between max.poll.interval.ms and session.timeout.ms for kafka_**, in stackoverflow](https://stackoverflow.com/questions/39730126/difference-between-session-timeout-ms-and-max-poll-interval-ms-for-kafka-0-10)
+- [**_difference between max.poll.interval.ms and session.timeout.ms for Kafka_**, in stackoverflow.com](https://stackoverflow.com/questions/39730126/difference-between-session-timeout-ms-and-max-poll-interval-ms-for-kafka-0-10)
 - [**_Understanding Kafka’s Consumer Group Rebalancing_**, By Verica, in www.verica.io](https://www.verica.io/blog/understanding-kafkas-consumer-group-rebalancing/)
