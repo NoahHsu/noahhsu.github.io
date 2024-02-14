@@ -14,8 +14,8 @@ To ensure a better user experience, it's common to build an asynchronous system 
 
 1. Asynchronous system integrating generative AI
 2. Problems related to high-volume requests
-   - The producers unevenly distributed events among Kafka partitions
-   - The consumers frequently experienced unnecessary rebalancing and event double-consumption
+    - The producers unevenly distributed events among Kafka partitions
+    - The consumers frequently experienced unnecessary rebalancing and event double-consumption
 3. How to solve the problems
 
 ---
