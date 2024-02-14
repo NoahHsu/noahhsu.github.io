@@ -170,9 +170,9 @@ Therefore, we opt for option 2—assigning every event an event key. This ensure
 
 We aim to resolve the issue of consumers frequently rebalancing and double-consuming events by adjusting consumer settings. Upon analyzing the problem, we have listed several solutions to consider:
 
-1. **Increase the Heartbeat**: We can set the consumer `ack-mode` to `manual-immediate`, `count`, or `time` to commit offsets more frequently for processed events.
-2. **Limit the Number of Records in Each Poll**: We can set a small number for the `max.poll.records` to ensure that we can process all records within the `max.poll.interval.ms`.
-3. **Extend Timeout Tolerance**: We can set a high number for both `max.poll.interval.ms` and `session.timeout.ms` to allow sufficient time for processing all records from one poll.
+1. **Increase the Heartbeat**:<br> We can set the consumer `ack-mode` to `manual-immediate`, `count`, or `time` to commit offsets more frequently for processed events.
+2. **Limit the Number of Records in Each Poll**:<br> We can set a small number for the `max.poll.records` to ensure that we can process all records within the `max.poll.interval.ms`.
+3. **Extend Timeout Tolerance**:<br> We can set a high number for both `max.poll.interval.ms` and `session.timeout.ms` to allow sufficient time for processing all records from one poll.
 
 First, we can remove the option 3. This is a risky adjustment since it can not make sure whether the consumer is actively processing events or is stuck somehow. A longer timeout tolerance could delay recovery when failure did happen.
 
@@ -191,12 +191,15 @@ In this article, we propose a pipeline system architecture, which integrates som
 The article focuses on two critical challenges: **achieving even event distribution across partitions** and **preventing unnecessary rebalancing and event double consumption**. To address the former issue, we ensure that every event has its own key, such as a UUID. For the latter problem, we adjust the `max.poll.records`, parameter to a small value, ensuring that records can be processed within the `max.poll.interval.ms`. These adjustments result in a significant improvement in pipeline efficiency, estimated to be around 3 times.
 
 ### Reference
+
 Producer:
+
 - [**_DefaultPartitioner.java_**, from Apache, in GitHub](https://github.com/apache/kafka/blob/trunk/clients/src/main/java/org/apache/kafka/clients/producer/internals/DefaultPartitioner.java)
 - [**_KIP-480 Sticky Partitioning_**](https://cwiki.apache.org/confluence/display/KAFKA/KIP-480%3A+Sticky+Partitioner)
 - [**_StickyPartitionCache.java_**, from Apache, in GitHub](https://github.com/apache/kafka/blob/trunk/clients/src/main/java/org/apache/kafka/clients/producer/internals/StickyPartitionCache.java)
 
 Consumer:
+
 - [**_Chapter 4. Kafka Consumers: Reading Data from Kafka_**, in O'REILLY](https://www.oreilly.com/library/view/kafka-the-definitive/9781491936153/ch04.html)
 - [**_difference between max.poll.interval.ms and session.timeout.ms for kafka_**, in stackoverflow](https://stackoverflow.com/questions/39730126/difference-between-session-timeout-ms-and-max-poll-interval-ms-for-kafka-0-10)
 - [**_Understanding Kafka’s Consumer Group Rebalancing_**, By Verica, in www.verica.io](https://www.verica.io/blog/understanding-kafkas-consumer-group-rebalancing/)
