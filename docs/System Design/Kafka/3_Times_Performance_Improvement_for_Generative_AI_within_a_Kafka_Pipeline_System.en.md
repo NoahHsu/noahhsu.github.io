@@ -4,7 +4,7 @@ tags:
 - Distributed Systems
 - System Design
 ---
-# Tackle Performance Issues about Generative AI within a Kafka Pipeline System
+# 3 Times Performance Improvement for Generative AI within a Kafka Pipeline System
 
 ![Kafka-Cover.jpg](assets%2FKafka-Cover.jpg)
 
