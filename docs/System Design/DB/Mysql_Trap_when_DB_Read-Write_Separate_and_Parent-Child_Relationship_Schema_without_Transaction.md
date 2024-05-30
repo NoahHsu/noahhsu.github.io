@@ -1,3 +1,11 @@
+---
+tags:
+- DB
+- Distributed Systems
+- System Design
+- Read/Write Separate
+---
+
 # Mysql Trap when DB Read-Write Separate and Parent-Child Relationship Schema without Transaction
 
 ![Db_Replica_Trap_Cover.png](assets%2FDb_Replica_Trap_Cover.png)
@@ -12,9 +20,9 @@ It's no secret that the trade-off for using a read-write separation mechanism is
 
 In MySQL 8.x, the replica DB syncs data from the main DB by reading the "binary log," which we call a "binlog." The content of the "binlog" can be set in two formats: **row-based** and **statement-based**. Since some nondeterministic statements (those that depend on a loadable function or stored program, LIMIT without an ORDER BY, etc.; see more details on [statement-based replication disadvantages]((https://dev.mysql.com/doc/refman/8.0/en/replication-sbr-rbr.html#replication-sbr-rbr-sbr-disadvantages))) are not suitable for statement-based replication, the default format is row-based ([ref.](https://dev.mysql.com/doc/refman/8.0/en/binary-log-setting.html)).
 
-In the row-based replication, it will **acquire a table lock** first, and then apply the affected rows changes (update or insert) in batch mode (more detail in [row-based replication process](https://dev.mysql.com/doc/refman/8.4/en/replication-rbr-usage.html)). So all the change within one statement or one transaction will be applied together. 
+In the row-based replication, it will **acquire a table lock** first, and then apply the affected row changes (update or insert) in batch mode (more detail in [row-based replication process](https://dev.mysql.com/doc/refman/8.4/en/replication-rbr-usage.html)). So all the changes within one statement or one transaction will be applied together. 
 
-As a result, if we don't use transaction on multiple insert statements to the same table, the "binlog" will add multiple separate logs, one for each record. The replica DB then reads the logs one by one, which would be a trap that some change is applied but some is not. 
+As a result, if we don't use transaction on multiple insert statements to the same table, the "binlog" will add multiple separate logs, one for each record. The replica DB then reads the logs one by one, which would be a trap that some change is applied but some are not. 
 
 After we understand how MySQL replicas sync data, let's take a look on which use cases might fail under this mechanism.
 
@@ -93,13 +101,13 @@ As we can see, a problematic situation may occur when the replica DB loads the b
 
 The reason we fell into this trap is that we initially wrote the insert child table record one by one without using a transaction. When we faced increased loading, we decided to use a Read-Write separate architecture, aware that it might cause data inconsistency in the read part. However, we didn't realize that our coding practices for inserting data also affect how the replica loads data.
 
-To step out the trap, **insert all child records within a transaction or in a single statement**, ensuring they are not saved separately. If this is difficult, there are still some workarounds, such as adding an extra field in the parent table to denote the expected number of child records and then modify the retry logic to check if the query result matches this value. or send all the needed data to second consumer instead of querying from replica DB.
+To step out of the trap, **insert all child records within a transaction or in a single statement**, ensuring they are not saved separately. If this is difficult, there are still some workarounds, such as adding an extra field in the parent table to denote the expected number of child records and then modifying the retry logic to check if the query result matches this value. or send all the needed data to the second consumer instead of querying from a replica DB.
 
 ---
 
-## Sumarry
+## SumMarry
 
-In this article, we first provide a brief overview of how the MySQL replica DB syncs data from the main DB. Second, we introduce a scenario that could cause an incorrect result if a query occurs during partial replication due to inserting data separately. We then identify that the cause is historical technical debt and a lack of comprehensive knowledge on DB replication. Finally, we discuss how to avoid this error by merging multiple inserts into a single statement or using transactions. Additionally, we explore some workarounds to avoid this trap if a single statement or transaction is not feasible in certain cases.
+In this article, we first provide a brief overview of how the MySQL replica DB syncs data from the main DB. Second, we introduce a scenario that could cause an incorrect result if a query occurs during partial replication due to inserting data separately. We then identify that the cause is historical technical debt and a lack of comprehensive knowledge of DB replication. Finally, we discuss how to avoid this error by merging multiple inserts into a single statement or using transactions. Additionally, we explore some workarounds to avoid this trap if a single statement or transaction is not feasible in certain cases.
 
 Thank you for reading!
 
