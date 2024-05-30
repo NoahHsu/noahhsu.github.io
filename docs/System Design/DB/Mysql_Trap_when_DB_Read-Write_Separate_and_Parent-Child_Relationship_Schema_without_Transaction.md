@@ -1,8 +1,12 @@
 # Mysql Trap when DB Read-Write Separate and Parent-Child Relationship Schema without Transaction
 
+![Db_Replica_Trap_Cover.png](assets%2FDb_Replica_Trap_Cover.png)
+
 DB replicas are essential for data-intensive systems. First, we can accelerate our performance by writing to the master and reading from replicas, which can have many instances or be geographically close to users. Second, the replica DB can serve as a backup for the system. No matter what happens to the main DB, it can be a data recovery source or even become the new main DB to reduce downtime.
 
 It's no secret that the trade-off for using a read-write separation mechanism is so-called "data inconsistency." The solutions to avoid this situation depend on the use cases and the architecture. In this article, we will go through the MySQL binlog mechanism and what would happen if we don't use transaction when insert/update parent-child relationship data. Let's start!
+
+---
 
 ## How Replica Sync Data from Main DB
 
@@ -13,6 +17,8 @@ In the row-based replication, it will **acquire a table lock** first, and then a
 As a result, if we don't use transaction on multiple insert statements to the same table, the "binlog" will add multiple separate logs, one for each record. The replica DB then reads the logs one by one, which would be a trap that some change is applied but some is not. 
 
 After we understand how MySQL replicas sync data, let's take a look on which use cases might fail under this mechanism.
+
+---
 
 ## Use Case that Fall into Trap
 
@@ -81,12 +87,15 @@ sequenceDiagram
 
 As we can see, a problematic situation may occur when the replica DB loads the binlog halfway (if we insert data without a transaction initially). The OrderAccumulateConsumer might only retrieve one order item, which will not trigger a retry query, resulting in an incorrect calculation.
 
+---
+
 ## How to Avoid Incomplete Read from Replicas
 
 The reason we fell into this trap is that we initially wrote the insert child table record one by one without using a transaction. When we faced increased loading, we decided to use a Read-Write separate architecture, aware that it might cause data inconsistency in the read part. However, we didn't realize that our coding practices for inserting data also affect how the replica loads data.
 
 To step out the trap, **insert all child records within a transaction or in a single statement**, ensuring they are not saved separately. If this is difficult, there are still some workarounds, such as adding an extra field in the parent table to denote the expected number of child records and then modify the retry logic to check if the query result matches this value. or send all the needed data to second consumer instead of querying from replica DB.
 
+---
 
 ## Sumarry
 
