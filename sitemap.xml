@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <url>
+        <loc>https://noahhsu.github.io/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/"/>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/tags/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/tags/"/>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/tags/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/DevOps/Design_an_Easy-to-Test_Flexible_Application_with_Config_Server_Toggle_System_and_Mock_Server/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/DevOps/Design_an_Easy-to-Test_Flexible_Application_with_Config_Server_Toggle_System_and_Mock_Server/"/>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/DevOps/Design_an_Easy-to-Test_Flexible_Application_with_Config_Server_Toggle_System_and_Mock_Server/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/DevOps/Easier%2C%20Flexible%2C%20and%20Lower%20Resource%20Cost%20Deployment%20Strategies%20by%20Feature%20Toggle/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/DevOps/Easier%2C%20Flexible%2C%20and%20Lower%20Resource%20Cost%20Deployment%20Strategies%20by%20Feature%20Toggle/"/>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/DevOps/Easier%2C%20Flexible%2C%20and%20Lower%20Resource%20Cost%20Deployment%20Strategies%20by%20Feature%20Toggle/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/DevOps/Safely_Deliver_Large_Scale_Feature_Migration_With_Feature_Toggle/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/DevOps/Safely_Deliver_Large_Scale_Feature_Migration_With_Feature_Toggle/"/>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/DevOps/Safely_Deliver_Large_Scale_Feature_Migration_With_Feature_Toggle/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/DevOps/The%20First%20Step%20Toward%20True%20Continuous%20Delivery/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/DevOps/The%20First%20Step%20Toward%20True%20Continuous%20Delivery/"/>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/DevOps/The%20First%20Step%20Toward%20True%20Continuous%20Delivery/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/DevOps/Kubernetes/High_Availability_Deployment_by_Pod_Topology_Spread_Constraints_in_K8s_Cluster/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/DevOps/Kubernetes/High_Availability_Deployment_by_Pod_Topology_Spread_Constraints_in_K8s_Cluster/"/>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/DevOps/Kubernetes/High_Availability_Deployment_by_Pod_Topology_Spread_Constraints_in_K8s_Cluster/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/Developer%20Experience/Backstage/Centralize%20All%20Needed%20Knowledge%20in%20One%20Developer%20Portals%20Through%20Spotify%20Backstage/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/Developer%20Experience/Backstage/Centralize%20All%20Needed%20Knowledge%20in%20One%20Developer%20Portals%20Through%20Spotify%20Backstage/"/>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/Developer%20Experience/Backstage/Centralize%20All%20Needed%20Knowledge%20in%20One%20Developer%20Portals%20Through%20Spotify%20Backstage/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/Developer%20Experience/Backstage/Three%20Ways%20to%20Solve%20CORS%20Issue%20in%20the%20Embed%20Swagger%20Page%20in%20Backstage/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/Developer%20Experience/Backstage/Three%20Ways%20to%20Solve%20CORS%20Issue%20in%20the%20Embed%20Swagger%20Page%20in%20Backstage/"/>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/Developer%20Experience/Backstage/Three%20Ways%20to%20Solve%20CORS%20Issue%20in%20the%20Embed%20Swagger%20Page%20in%20Backstage/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/Spring%20Boot/Say%20Goodbye%20to%20meaningless%20code%20for%20Controller%20and%20Service%20with%20Spring-Data-Rest/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/Spring%20Boot/Say%20Goodbye%20to%20meaningless%20code%20for%20Controller%20and%20Service%20with%20Spring-Data-Rest/"/>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/Spring%20Boot/Say%20Goodbye%20to%20meaningless%20code%20for%20Controller%20and%20Service%20with%20Spring-Data-Rest/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/Spring%20Boot/Spring%20Boot%203%20Observability%3A%20monitor%20Application%20on%20the%20method%20level/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/Spring%20Boot/Spring%20Boot%203%20Observability%3A%20monitor%20Application%20on%20the%20method%20level/"/>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/Spring%20Boot/Spring%20Boot%203%20Observability%3A%20monitor%20Application%20on%20the%20method%20level/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/Spring%20Boot/Spring_Boot_3_build_an_Efficiency_Idempotency_API_with_Redis/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/Spring%20Boot/Spring_Boot_3_build_an_Efficiency_Idempotency_API_with_Redis/"/>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/Spring%20Boot/Spring_Boot_3_build_an_Efficiency_Idempotency_API_with_Redis/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/System%20Design/How_to_design_an_efficient_Idempotent_API/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/System%20Design/How_to_design_an_efficient_Idempotent_API/"/>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/System%20Design/How_to_design_an_efficient_Idempotent_API/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/System%20Design/DB/Mysql_Trap_when_DB_Read-Write_Separate_and_Parent-Child_Relationship_Schema_without_Transaction/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/System%20Design/DB/Mysql_Trap_when_DB_Read-Write_Separate_and_Parent-Child_Relationship_Schema_without_Transaction/"/>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/System%20Design/DB/Mysql_Trap_when_DB_Read-Write_Separate_and_Parent-Child_Relationship_Schema_without_Transaction/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/System%20Design/Kafka/3_Times_Performance_Improvement_for_Generative_AI_within_a_Kafka_Pipeline_System/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/System%20Design/Kafka/3_Times_Performance_Improvement_for_Generative_AI_within_a_Kafka_Pipeline_System/"/>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/System%20Design/Kafka/3_Times_Performance_Improvement_for_Generative_AI_within_a_Kafka_Pipeline_System/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/System%20Design/Kafka/Get%20Kafka%20in%20prod-ready%2C%202%20decisions%20to%20make%20and%203%20implementation%20details/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/System%20Design/Kafka/Get%20Kafka%20in%20prod-ready%2C%202%20decisions%20to%20make%20and%203%20implementation%20details/"/>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/System%20Design/Kafka/Get%20Kafka%20in%20prod-ready%2C%202%20decisions%20to%20make%20and%203%20implementation%20details/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/System%20Design/Kafka/Robust%20Kafka%20Consumer%20Error%20Handling%20on%20a%20Spring%20Boot%203%20Application/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/System%20Design/Kafka/Robust%20Kafka%20Consumer%20Error%20Handling%20on%20a%20Spring%20Boot%203%20Application/"/>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/System%20Design/Kafka/Robust%20Kafka%20Consumer%20Error%20Handling%20on%20a%20Spring%20Boot%203%20Application/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/zh-TW/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/zh-TW/tags/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/tags/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/tags/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/zh-TW/DevOps/Design_an_Easy-to-Test_Flexible_Application_with_Config_Server_Toggle_System_and_Mock_Server/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/DevOps/Design_an_Easy-to-Test_Flexible_Application_with_Config_Server_Toggle_System_and_Mock_Server/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/DevOps/Design_an_Easy-to-Test_Flexible_Application_with_Config_Server_Toggle_System_and_Mock_Server/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/zh-TW/DevOps/Easier%2C%20Flexible%2C%20and%20Lower%20Resource%20Cost%20Deployment%20Strategies%20by%20Feature%20Toggle/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/DevOps/Easier%2C%20Flexible%2C%20and%20Lower%20Resource%20Cost%20Deployment%20Strategies%20by%20Feature%20Toggle/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/DevOps/Easier%2C%20Flexible%2C%20and%20Lower%20Resource%20Cost%20Deployment%20Strategies%20by%20Feature%20Toggle/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/zh-TW/DevOps/Safely_Deliver_Large_Scale_Feature_Migration_With_Feature_Toggle/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/DevOps/Safely_Deliver_Large_Scale_Feature_Migration_With_Feature_Toggle/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/DevOps/Safely_Deliver_Large_Scale_Feature_Migration_With_Feature_Toggle/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/zh-TW/DevOps/The%20First%20Step%20Toward%20True%20Continuous%20Delivery/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/DevOps/The%20First%20Step%20Toward%20True%20Continuous%20Delivery/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/DevOps/The%20First%20Step%20Toward%20True%20Continuous%20Delivery/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/zh-TW/DevOps/Kubernetes/High_Availability_Deployment_by_Pod_Topology_Spread_Constraints_in_K8s_Cluster/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/DevOps/Kubernetes/High_Availability_Deployment_by_Pod_Topology_Spread_Constraints_in_K8s_Cluster/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/DevOps/Kubernetes/High_Availability_Deployment_by_Pod_Topology_Spread_Constraints_in_K8s_Cluster/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/zh-TW/Developer%20Experience/Backstage/Centralize%20All%20Needed%20Knowledge%20in%20One%20Developer%20Portals%20Through%20Spotify%20Backstage/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/Developer%20Experience/Backstage/Centralize%20All%20Needed%20Knowledge%20in%20One%20Developer%20Portals%20Through%20Spotify%20Backstage/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/Developer%20Experience/Backstage/Centralize%20All%20Needed%20Knowledge%20in%20One%20Developer%20Portals%20Through%20Spotify%20Backstage/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/zh-TW/Developer%20Experience/Backstage/Three%20Ways%20to%20Solve%20CORS%20Issue%20in%20the%20Embed%20Swagger%20Page%20in%20Backstage/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/Developer%20Experience/Backstage/Three%20Ways%20to%20Solve%20CORS%20Issue%20in%20the%20Embed%20Swagger%20Page%20in%20Backstage/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/Developer%20Experience/Backstage/Three%20Ways%20to%20Solve%20CORS%20Issue%20in%20the%20Embed%20Swagger%20Page%20in%20Backstage/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/zh-TW/Spring%20Boot/Say%20Goodbye%20to%20meaningless%20code%20for%20Controller%20and%20Service%20with%20Spring-Data-Rest/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/Spring%20Boot/Say%20Goodbye%20to%20meaningless%20code%20for%20Controller%20and%20Service%20with%20Spring-Data-Rest/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/Spring%20Boot/Say%20Goodbye%20to%20meaningless%20code%20for%20Controller%20and%20Service%20with%20Spring-Data-Rest/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/zh-TW/Spring%20Boot/Spring%20Boot%203%20Observability%3A%20monitor%20Application%20on%20the%20method%20level/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/Spring%20Boot/Spring%20Boot%203%20Observability%3A%20monitor%20Application%20on%20the%20method%20level/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/Spring%20Boot/Spring%20Boot%203%20Observability%3A%20monitor%20Application%20on%20the%20method%20level/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/zh-TW/Spring%20Boot/Spring_Boot_3_build_an_Efficiency_Idempotency_API_with_Redis/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/Spring%20Boot/Spring_Boot_3_build_an_Efficiency_Idempotency_API_with_Redis/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/Spring%20Boot/Spring_Boot_3_build_an_Efficiency_Idempotency_API_with_Redis/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/zh-TW/System%20Design/How_to_design_an_efficient_Idempotent_API/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/System%20Design/How_to_design_an_efficient_Idempotent_API/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/System%20Design/How_to_design_an_efficient_Idempotent_API/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/zh-TW/System%20Design/DB/Mysql_Trap_when_DB_Read-Write_Separate_and_Parent-Child_Relationship_Schema_without_Transaction/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/System%20Design/DB/Mysql_Trap_when_DB_Read-Write_Separate_and_Parent-Child_Relationship_Schema_without_Transaction/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/System%20Design/DB/Mysql_Trap_when_DB_Read-Write_Separate_and_Parent-Child_Relationship_Schema_without_Transaction/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/zh-TW/System%20Design/Kafka/3_Times_Performance_Improvement_for_Generative_AI_within_a_Kafka_Pipeline_System/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/System%20Design/Kafka/3_Times_Performance_Improvement_for_Generative_AI_within_a_Kafka_Pipeline_System/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/System%20Design/Kafka/3_Times_Performance_Improvement_for_Generative_AI_within_a_Kafka_Pipeline_System/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/zh-TW/System%20Design/Kafka/Get%20Kafka%20in%20prod-ready%2C%202%20decisions%20to%20make%20and%203%20implementation%20details/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/System%20Design/Kafka/Get%20Kafka%20in%20prod-ready%2C%202%20decisions%20to%20make%20and%203%20implementation%20details/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/System%20Design/Kafka/Get%20Kafka%20in%20prod-ready%2C%202%20decisions%20to%20make%20and%203%20implementation%20details/"/>
+    </url>
+    <url>
+        <loc>https://noahhsu.github.io/zh-TW/System%20Design/Kafka/Robust%20Kafka%20Consumer%20Error%20Handling%20on%20a%20Spring%20Boot%203%20Application/</loc>
+        <lastmod>2024-06-05</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh-TW" href="https://noahhsu.github.io/zh-TW/System%20Design/Kafka/Robust%20Kafka%20Consumer%20Error%20Handling%20on%20a%20Spring%20Boot%203%20Application/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://noahhsu.github.io/System%20Design/Kafka/Robust%20Kafka%20Consumer%20Error%20Handling%20on%20a%20Spring%20Boot%203%20Application/"/>
+    </url>
+</urlset>
