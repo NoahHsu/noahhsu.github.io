@@ -1,6 +1,6 @@
-# 5 Step To Make Gradle Configuration Extreme Clean In a Multi-Module Project
+# 5 Step to Make Gradle Configuration Extreme Clean in a Multi-Module Project
 
-In a multi-module Gradle project, there are many tasks to handle during the build process. Using Gradle to manage dependency version control, plugin usage, build logic, and more is a popular and effective approach. However, achieving these tasks requires a lot of configuration scripts, which can make the file more complicated, and more difficult for development. In this article, we will demonstrate a clean and efficient way to manage configuration files. The needed steps are as follows:
+Multi-module Gradle projects involve numerous tasks during the build process. Managing dependency version control, plugin usage, build logic, and more with Gradle proves to be a popular and effective approach. But, achieving these tasks requires a lot of configuration scripts, which can make the file more complicated, and more difficult for development. These steps in the article will guide you through a clean and efficient way to manage configuration files:
 
 1. extract version declaring in `gradle.properties`.
 2. define all plugin and repository in `settings.gradle`.
@@ -8,13 +8,13 @@ In a multi-module Gradle project, there are many tasks to handle during the buil
 4. declaring dependency and plugin directly instead of using `subproject` in submodule.
 5. extract complex and common task config to extra file and apply wherever need it.
 
-(Take a look at my [repository](https://github.com/NoahHsu/event-sourcing-order-poc) or [refactor PR](https://github.com/NoahHsu/event-sourcing-order-poc/pull/72), if you can't wait to find out how it looks.)
+Take a look at this [repository](https://github.com/NoahHsu/event-sourcing-order-poc) or [refactor PR](https://github.com/NoahHsu/event-sourcing-order-poc/pull/72), if you can't wait to find out how it looks.
 
-## Step By Step Demonstration
+## Step by Step Demonstration
 
-### Step1: Extract Version Declaration
+### Step 1: Extract Version Declaration
 
-We can extract version declaring in a `gradle.properties` file. Besides, we can also define some gradle argument like below:
+Version declarations can be extracted into a `gradle.properties` file. Additionally, Gradle arguments can be defined as shown below:
 
 ```properties title="./gradle.properties"
 group='org.example'
@@ -39,9 +39,9 @@ lombokVersion=1.18.20
 org.gradle.parallel=true
 ```
 
-### Step2: Define Used Plugins and Maven Source 
+### Step 2: Define Used Plugins and Maven Source 
 
-We can define all the used plugins and source maven repository in a `settings.gradle`.:
+All used plugins and the source Maven repository can be defined in a `settings.gradle`.:
 
 ```groovy title="./settings.gradle"
 import org.gradle.api.initialization.resolve.RepositoriesMode
@@ -83,9 +83,9 @@ findProject(':order:query-side')?.name = 'order-query-side'
 
 ```
 
-### Step3: Define Allprojects DependencyManagement
+### Step 3: Define Allprojects DependencyManagement
 
-We can define all the used libraries in a `allprojects.dependencyManagement` closure in `./build.gradle`:
+All the used libraries should be defined in a `allprojects.dependencyManagement` closure in `build.gradle` of the root module:
 
 ```groovy title="./build.gradle"
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
