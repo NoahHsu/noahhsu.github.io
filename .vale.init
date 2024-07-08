@@ -1,0 +1,10 @@
+StylesPath = .github/styles
+
+MinAlertLevel = suggestion
+
+Vocab = Base
+
+Packages = write-good, Readability, Google, alex, proselint
+
+[*.md]
+BasedOnStyles = Vale, write-good, Readability, Google, alex, proselint

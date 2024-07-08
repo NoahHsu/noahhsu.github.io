@@ -1,0 +1,21 @@
+name: md-syntax-check
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+
+jobs:
+  syntax-check:
+    name: syntax-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_TOKEN}}
+      - name: markdownlint
+        uses: reviewdog/action-markdownlint@v0
+        with:
+          reporter: github-pr-review
+          token: ${{ secrets.GH_TOKEN }}
