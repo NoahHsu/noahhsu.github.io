@@ -1,0 +1,27 @@
+name: md-style-check
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+
+jobs:
+  style-check:
+    name: style-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_TOKEN}}
+      - name: Set Up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.6
+      - name: vale
+        uses: errata-ai/vale-action@reviewdog
+        with:
+          reporter: github-pr-review
+          fail_on_error: false
+          version: 2.29.2
+          token: ${{ secrets.GH_TOKEN }}
