@@ -1,12 +1,12 @@
-# 5 Step to Make Gradle Configuration Extreme Clean in a Multi-Module Project
+# 5 Steps to Make Gradle Configuration Extreme Clean in a Multi-Module Project
 
 Multi-module Gradle projects involve numerous tasks during the build process. Managing dependency version control, plugin usage, build logic, and more with Gradle proves to be a popular and effective approach. But, achieving these tasks requires a lot of configuration scripts, which can make the file more complicated, and more difficult for development. These steps in the article will guide you through a clean and efficient way to manage configuration files:
 
 1. extract version declaring in `gradle.properties`.
-2. define all plugin and repository in `settings.gradle`.
-3. define all library in the `allprojects.dependencyManagement` in `./build.gradle`.
+2. define all plugins and repositories in `settings.gradle`.
+3. define all libraries in the `allprojects.dependencyManagement` in `./build.gradle`.
 4. declaring dependency and plugin directly instead of using `subproject` in submodule.
-5. extract complex and common task config to extra file and apply wherever need it.
+5. extract complex and common task config to extra files and apply wherever needed.
 
 Take a look at this [repository](https://github.com/NoahHsu/event-sourcing-order-poc) or [refactor PR](https://github.com/NoahHsu/event-sourcing-order-poc/pull/72), if you can't wait to find out how it looks.
 
@@ -41,7 +41,7 @@ org.gradle.parallel=true
 
 ### Step 2: Define Used Plugins and Maven Source 
 
-All used plugins and the source Maven repository can be defined in a `settings.gradle`.:
+All used plugins and the source Maven repository can be defined in a `settings.gradle`:
 
 ```groovy title="./settings.gradle"
 import org.gradle.api.initialization.resolve.RepositoriesMode
@@ -144,7 +144,7 @@ in the `dependencyManagement` closure, we can first import the BOM of other depe
 
 ### Step4: Avoid Using `subprojects {}`  
 
-Declaring dependency and plugin directly instead of using `subproject` in `build.gradle` for submodule like:
+Declaring dependency and plugin directly instead of using `subproject` in `build.gradle` for sub-modules like:
 
 ```groovy title="./order/command-side/build.gradle"
 plugins {
@@ -173,11 +173,11 @@ dependencies {
 }
 ```
 
-It can be more clear and intuitive to declare used plugin and dependencies in each project. Thanks to the `dependencyManagement` in the root module, we can use a simple form of declaration here in subproject.
+It can be more intuitive to declare the used plugin and dependencies in each project. Thanks to the `dependencyManagement` in the root module, we can use a simple form of the declaration here in the subproject.
 
-### Step5: Extract Related Configuration 
+### Step 5: Extract Related Configuration 
 
-Extract complex and common task config to extra file and apply wherever need it.
+Extract complex and common task config to extra files and apply them wherever needed.
 
 In the above file `./order/command-side/build.gradle`, the important script snippet 
 
@@ -205,12 +205,14 @@ jib {
 }
 ```
 
-In this way, we can make the `.gradle` file in the submodules/subprojects very clean and more readability. Moreover, we can reuse these configurations in different place (e.g. `order/query-side`, `payment/command-side`, etc.).
+In this way, we can make the `.gradle` file in the submodules/subprojects is very clean and more readable. Moreover, we can reuse these configurations in different places (e.g. `order/query-side`, `payment/command-side`, etc.).
 
 ## Summary
 
-In conclusion, managing a multi-module Gradle project can be streamlined and elegant by adopting a structured approach to configuration. In this article, we propose a five-step method to centralize plugin and dependency version declarations and extract configurations into independent .gradle files. Besides, be cautious when using special methods to ensure the project building logic straightforward and easy to manage. By following these steps, you can enhance the readability and maintainability of your multi-module Gradle projects.
+In conclusion, managing a multi-module Gradle project can be streamlined and elegant by adopting a structured approach to configuration. In this article, we propose a five-step method to centralize plugin and dependency version declarations and extract configurations into independent .gradle files. Besides, be cautious when using special methods to ensure the project-building logic straightforward and easy to manage. By following these steps, you can enhance the readability and maintainability of your multi-module Gradle projects.
 
 ### Reference
 - [Why Avoid `subprojects {}`](https://docs.gradle.org/current/userguide/sharing_build_logic_between_subprojects.html#sec:convention_plugins_vs_cross_configuration)
 - [Pull Request](https://github.com/NoahHsu/event-sourcing-order-poc/pull/72)
+
+<script src="https://gist.github.com/NoahHsu/3fdd35ee517e541aec38af70693ad123.js?file=build.gradle"></script>
