@@ -1,4 +1,4 @@
-site_name: NoahHsu's SWE Note
+site_name: NoahHsu's Life Note
 site_url: https://noahhsu.github.io/
 repo_url: https://github.com/NoahHsu/noahhsu.github.io
 edit_uri: 'edit/main/docs/'
@@ -76,27 +76,23 @@ extra:
       make our documentation better.
 
 plugins:
+  - blog:
+      blog_dir: Software Engineering Blog
+      blog_toc: true
+      archive_name: History-Post
+      archive_date_format: yyyy
+      categories_allowed:
+        - Developer Experience
+        - DevOps
+        - Spring Boot
+        - System Design
+      authors_profiles: true
+      pagination_per_page: 5
   - tags:
-      tags_file: tags.md
+      tags_file: Software Engineering Blog/tags.md
   - search:
       min_search_length: 2
       separator: '[\s\-\.]+'
-  - i18n:
-      docs_structure: suffix
-      fallback_to_default: true
-      reconfigure_material: true
-      reconfigure_search: true
-      languages:
-        - locale: en
-          default: true
-          name: English
-          build: true
-          site_name: "NoahHsu's SWE Note"
-        - locale: zh-TW
-          name: 繁體中文
-          build: true
-          site_name: "Noah Hsu的軟體工程師筆記"
-  - git-revision-date
   - glightbox
 
 markdown_extensions:
@@ -116,3 +112,9 @@ markdown_extensions:
   - abbr
   - toc:
       permalink: true
+
+
+extra_css:
+  - stylesheets/chords.css
+extra_javascript:
+  - javascripts/lyrics-convertor.js

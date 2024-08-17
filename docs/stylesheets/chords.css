@@ -1,0 +1,36 @@
+:root {
+  color-scheme: light dark;
+}
+
+p {
+  margin: 0; /* between paragraphs */
+}
+
+div.chord {
+  margin: 0;
+  line-height: 4.2em;
+  position: relative;
+}
+
+span.chord {
+  display: inline-block;
+  position: absolute;
+  line-height: 1em;
+  font-size: 80%;
+  color: light-dark(black, black);
+  top: 0;
+  background-color: lightgray;
+}
+
+div.instrument {
+  line-height: 1.2em;
+}
+
+span.instrument {
+  display: inline-block;
+  line-height: 1em;
+  color: light-dark(black, black);
+  font-size: 80%;
+  top: 0;
+  background-color: lightgray;
+}

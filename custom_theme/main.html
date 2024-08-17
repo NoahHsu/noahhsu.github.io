@@ -3,6 +3,7 @@
 {% block libs %}
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1453160910119702"
         crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- Google tag (gtag.js) -->
 {%- if config.theme.highlightjs %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
@@ -23,3 +24,29 @@
 <meta name="theme-color" content="#546d78"><meta name="color-scheme" content="dark"></head>
 <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.2">
 {% endblock%}
+
+{% block scripts %}
+<!-- Add scripts that need to run before here -->
+{{ super() }}
+<script>
+    document$.subscribe(function() {
+        console.log("Initialize third-party libraries here")
+        $.each($('.md-content__inner.md-typeset'), function (i, left) {
+          $('p', left).each(function () {
+            const lyrics = '{lyrics}';
+            const instrument = '{instrument}';
+            var original = $(this).text();
+            if (original.startsWith(lyrics)) {
+              var ly = convertLyrics(original)
+              $(this).html(ly);
+            } else if (original.startsWith(instrument)) {
+              var ly = convertInterlude(original)
+              $(this).html(ly);
+            }
+          });
+        });
+
+    })
+</script>
+<!-- Add scripts that need to run afterwards here -->
+{% endblock %}

@@ -29,7 +29,6 @@ jobs:
             "mkdocs" \
             "mkdocs-material" \
             "mkdocs-bootswatch" \
-            "mkdocs-static-i18n" \
             "mkdocs-git-revision-date-plugin" \
             "mkdocs-glightbox"
 
