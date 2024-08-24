@@ -23,7 +23,7 @@ OutLine:
     - Mock
 - little addon setup to make better
   - dev
-    - docker profile connect to spring profile
+    - docker profile align to spring profile
     ![profile_not_updated.png](resources%2Fsb-docker%2Fprofile_not_updated.png)
     - avoid build in image
   - test
@@ -37,18 +37,25 @@ OutLine:
 
 ## As-Is
 ### In Development
-When developing Spring Boot applications, developers often rely on Docker to create a consistent and reproducible environment. Two key tools used in this process are Makefile and Docker Compose.
-
-- Makefile: Developers use Makefile to automate common tasks, like building Docker images and starting containers. This ensures that everyone on the team follows the same procedures, reducing the risk of environment-related bugs.
+When developing Spring Boot applications, developers often rely on Docker to create a consistent and reproducible environment. When the number of dependency components grows, two key tools used in this process are Docker Compose and Makefile.
 
 - Docker Compose: With Docker Compose, developers can easily manage multi-container applications. By defining services, networks, and volumes in a single file, Docker Compose makes it simple to spin up the entire application stack with a single command.
 
-### In Testing
-Testing in a Dockerized environment offers similar advantages. However, it requires some additional tools and configurations to ensure tests are consistent and isolated.
+- Makefile: Developers use Makefile to automate common tasks, like building Docker images and starting containers. This ensures that everyone on the team follows the same procedures, reducing the risk of environment-related bugs.
 
-- Testcontainers: Testcontainers is a popular Java library that enables the use of lightweight, throwaway containers for testing. This allows developers to run integration tests against real dependencies, like databases and message brokers, without having to manually set them up.
+but in multi module project, each Application might need different dependencies. it comes to a difficult situation.
+every time you need to put different profile after docker compose up.
+or wrap it into different make command.
+both of them needs extra effort to execute and remember (engineer is extreamly lazy).
+dont even mention about the integrate with unit test.
+
+### In Testing
+When test needs to cover the dependency, it first come up with the mock framework in programatical way.
+but it turn out to loose so many detail because of lack of real
 
 - Mocks: For unit testing, mocks are often used to simulate the behavior of complex dependencies. While mocks are useful for isolated testing, they don't always provide the same level of assurance as integration tests with real dependencies.
+
+- Testcontainers: Testcontainers is a popular Java library that enables the use of lightweight, throwaway containers for testing. This allows developers to run integration tests against real dependencies, like databases and message brokers, without having to manually set them up.
 
 ## Why need spring-boot-docker-support
 
