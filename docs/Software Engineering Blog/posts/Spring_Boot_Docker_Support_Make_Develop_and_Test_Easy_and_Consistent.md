@@ -24,7 +24,7 @@ OutLine:
 - little addon setup to make better
   - dev
     - docker profile align to spring profile
-    ![profile_not_updated.png](resources%2Fsb-docker%2Fprofile_not_updated.png)
+    
     - avoid build in image
   - test
     - active in test
@@ -37,30 +37,41 @@ OutLine:
 
 ## As-Is
 ### In Development
-When developing Spring Boot applications, developers often rely on Docker to create a consistent and reproducible environment. When the number of dependency components grows, two key tools used in this process are Docker Compose and Makefile.
+Developers often rely on Docker to create a consistent and reproducible environment when developing Spring Boot applications. When the number of dependency components grows, two key tools used in this process are Docker Compose and Makefile.
 
-- Docker Compose: With Docker Compose, developers can easily manage multi-container applications. By defining services, networks, and volumes in a single file, Docker Compose makes it simple to spin up the entire application stack with a single command.
-
-- Makefile: Developers use Makefile to automate common tasks, like building Docker images and starting containers. This ensures that everyone on the team follows the same procedures, reducing the risk of environment-related bugs.
-
-but in multi module project, each Application might need different dependencies. it comes to a difficult situation.
-every time you need to put different profile after docker compose up.
-or wrap it into different make command.
-both of them needs extra effort to execute and remember (engineer is extreamly lazy).
-dont even mention about the integrate with unit test.
+However, in a multi-module project, each application might need different dependencies. It comes to a difficult situation.
+Every time we need to put [different profiles](https://docs.docker.com/compose/profiles/) with `docker-compose up`, or wrap it into [different `make` commands](https://makefiletutorial.com/).
+Both need extra effort to execute and remember (engineers are extremely lazy).
+Don't even mention the integration difficulty in unit tests.
 
 ### In Testing
-When test needs to cover the dependency, it first come up with the mock framework in programatical way.
-but it turn out to loose so many detail because of lack of real
+When a test needs to cover the dependency, it first comes up with the mock framework in a programmatic way.
+But it turns out to lose so many details because of the lack of real integration. such as
 
-- Mocks: For unit testing, mocks are often used to simulate the behavior of complex dependencies. While mocks are useful for isolated testing, they don't always provide the same level of assurance as integration tests with real dependencies.
+1. The dialect and SQL execution difference between in-memory h2 DB and a real Mysql DB.
+2. Provide a mock Java object to make an API Client test lose the coverage of the JSON parsing process. 
 
-- Testcontainers: Testcontainers is a popular Java library that enables the use of lightweight, throwaway containers for testing. This allows developers to run integration tests against real dependencies, like databases and message brokers, without having to manually set them up.
+so some of them start to use the TestContainer technic, to provide a real instance during unit tests. However, TestContainer suffers from some points too, like:
 
-## Why need spring-boot-docker-support
+1. need [support library](https://java.testcontainers.org/modules/databases/mysql/) to gain more interaction.
+2. a programmatic way to set up, which is different from the development time (docker-compose way).
+3. extra setting to share in different test
 
-The "As-Is" methods for handling Docker in Spring Boot projects come with several downsides that can hinder development and testing efficiency. Relying on manually crafted Makefiles and Docker Compose configurations often requires specific knowledge, which can create a barrier for new team members and increase the risk of errors. This setup also leads to inconsistencies, as developers might configure their environments slightly differently, resulting in the classic "it works on my machine" problem. 
-Additionally, the current approach lacks the seamless integration needed to ensure that environments are fully isolated from host dependencies, which can cause issues when moving from development to testing or production. Furthermore, the manual management of containers across multiple modules can be time-consuming and inefficient, slowing down the test process and making it harder to maintain consistent test results. These drawbacks highlight the need to transition to Spring Boot's Docker Compose support, which offers a more streamlined, reliable, and accessible way to manage Docker environments, ultimately reducing the overhead and potential issues associated with the current "As-Is" methods.
+## Introducing the Spring-Boot-Docker-Compose
+
+In conclusion, the way of providing dependency containers is not a flawless practice for now. So Spring community provides a new way to seamlessly integrate with Spring Boot App and docker-compose called [Spring-Boot-Docker-Compose](https://docs.spring.io/spring-boot/reference/features/dev-services.html#features.dev-services.docker-compose), follow the starting guide could easily run the app with the dependency container together in one command.
+
+just add the dependency
+
+```groovy
+developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+```
+
+then provide a `compose.yaml` file in the root folder can do the trick. (file alternative)
+
+![img.png](resources/sb-docker/start_with_docker_console.png)
+
+![start_with_docker_podman.png](resources/sb-docker/start_with_docker_podman.png)
 
 ## Little Add-On Setup to Make It Better
 To enhance the development and testing experience, consider the following improvements.
@@ -82,6 +93,8 @@ To fully leverage Docker in tests, it's essential to activate the Docker environ
 #### Shared Containers Across Modules:
 
 If your application consists of multiple modules, sharing Docker containers across tests can significantly speed up the testing process. Instead of spinning up a new container for each test module, containers can be shared, reducing the startup time and resource usage.
+
+![profile_not_updated.png](resources/sb-docker/profile_not_updated.png)
 
 ## Summary of Advantages
 
