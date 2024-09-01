@@ -17,13 +17,23 @@ tags:
 
 ![SB-Docker-cover.png](resources%2Fsb-docker%2FSB-Docker-cover.png)
 
+[Spring-Boot-Docker-Compose](https://docs.spring.io/spring-boot/reference/features/dev-services.html#features.dev-services.docker-compose) is a very powerful tool to help developer in their daily job. Help the Spring Boot app start with a `docker-compose up` automatically. In Both development and running test. This tiny automation actually bring huge benefit to both developer experiment and engineering practice
+
+In this article, we will cover:
+
+- The challenges faced before adoption.
+- How to implement it.
+- Setup tips for optimal usage.
+- A summary of the advantages.
+
+<!-- more -->
+
 ## As-Is
 
 ### In Development
 
 Developers often rely on Docker to create a consistent and reproducible environment when developing Spring Boot
-applications. When the number of dependency components grows, two key tools used in this process are Docker Compose and
-Makefile.
+applications. When the number of dependency components grows, two key tools used in this process are Docker Compose and Makefile.
 
 However, in a multi-module project, each app might need different dependencies. It comes to a difficult
 situation.
