@@ -205,7 +205,7 @@ Then, in our test class, just add the `@SpringBootTest`, so that the docker-comp
 If your application consists of multiple modules, sharing Docker containers across tests can significantly speed up the
 testing process. Instead of spinning up new containers for each test module, containers can be shared, reducing the startup time and resource usage.
 
-If we set the `spring.docker.compose.lifecycle-management` as `start-only` ([reference to document](https://docs.spring.io/spring-boot/reference/features/dev-services.html#features.dev-services.docker-compose.lifecycle)), then the docker cluster will not stop after each test. In the second test, which needs to start the docker-compose, will find the docker cluster is already up and ignore that.
+If we set the `spring.docker.compose.lifecycle-management` as `start-only` ([reference to document](https://docs.spring.io/spring-boot/reference/features/dev-services.html#features.dev-services.docker-compose.lifecycle)), then the docker cluster won't stop after each test. In the second test, which needs to start the docker-compose, will find the docker cluster is already up and ignore that.
 
 ![profile_not_updated.png](resources/sb-docker/profile_not_updated.png)
 
@@ -215,23 +215,23 @@ Using Spring-Boot-Docker-Compose in both development and testing environments pr
 
 ### No Prior Knowledge Required:
 
-Developers don't need to know and execute `docker-compose` or `makefile` to run dependency components before running the Spring Boot application. The setup can be standardized and automatic, allowing even newcomers to the project to start the application quickly.
+Developers don't need to know and execute `docker-compose` or `makefile` to run dependency components before running the Spring Boot app. The setup can be standardized and automatic, allowing even newcomers to the project to start the application quickly.
 
 ### Decoupling TestContainer Java Library
 
-By using this technic, we can be free from finding the supported TestContainer library for each component, when we need to do extra initialize setup, such as creating schema and data in [Mysql-TestContainer](https://java.testcontainers.org/modules/databases/mysql/), adding mock-rules for [MockServer TestContainer](https://java.testcontainers.org/modules/mockserver/), ...etc. We can use the same setting method as we used in developing.
+By using this technic, we can be free from finding the supported TestContainer library for each component, when we need to do extra initialize setup, such as creating schema and data in [Mysql-TestContainer](https://java.testcontainers.org/modules/databases/mysql/), adding mock-rules for [MockServer TestContainer](https://java.testcontainers.org/modules/mockserver/), …etc. We can use the same setting method as we used in developing.
 
 ### Test Case Consistency:
 
-By using Spring-Boot-Docker-Compose for tests, we ensure that all test data are consistent between development and test. Reducing the effort to try to make extra test data in developing features.
+By using Spring-Boot-Docker-Compose for tests, we ensure that all test data is consistent between development and test. Reducing the effort to try to make extra test data in developing features.
 
 ### Improved Test Coverage:
 
-In this way, We can easily write some Integration-Test (In a style that the connection didn't go out of one machine, (Otherwise would be called an E2E-Test)) by `@SpringBootTest` (with images of DB, Kafka, Redis, Mock-Server... ). So that the PR-check can provide more confidence than normal Unit-Test.
+In this way, We can easily write some Integration-Test (In a style that the connection didn't go out of one machine, (Otherwise would be called an E2E-Test)) by `@SpringBootTest` (with images of DB, Kafka, Redis, Mock-Server, etc. ). So that the PR-check can provide more confidence than a normal unit-test.
 
 In conclusion, integrating Spring-Boot-Docker-Compose support into your Spring Boot development and testing offers an intuitive,
 consistent, and efficient process that can significantly enhance productivity and reliability. With just a few
-additional configurations, you can leverage the full power of Docker to create a development environment that is both easy to use and highly effective.
+additional configurations, you can leverage the full power of Docker to create a development environment that's both easy to use and highly effective.
 
 ### Reference
 
