@@ -17,7 +17,7 @@ tags:
 
 ![SB-Docker-cover.png](resources%2Fsb-docker%2FSB-Docker-cover.png)
 
-[Spring-Boot-Docker-Compose](https://docs.spring.io/spring-boot/reference/features/dev-services.html#features.dev-services.docker-compose) is a very powerful tool to help developer in their daily job. Help the Spring Boot app start with a `docker-compose up` automatically. In Both development and running test. This tiny automation actually bring huge benefit to both developer experiment and engineering practice
+[Spring-Boot-Docker-Compose](https://docs.spring.io/spring-boot/reference/features/dev-services.html#features.dev-services.docker-compose) is a very powerful tool to help developer in their daily job. Help the Spring Boot app start with `docker-compose up` automatically. In Both development and running tests. This tiny automation actually brings huge benefits to both developer experiment and engineering practice
 
 In this article, we will cover:
 
@@ -38,7 +38,7 @@ applications. When the number of dependency components grows, two key tools used
 However, in a multi-module project, each app might need different dependencies. It comes to a difficult
 situation.
 Every time we need to put [different profiles](https://docs.docker.com/compose/profiles/) with `docker-compose up`, or
-wrap it into [different `make` commands](https://makefiletutorial.com/).
+wrap them into [different `make` commands](https://makefiletutorial.com/).
 Both need extra effort to execute and remember (engineers are extremely lazy).
 Don't even mention the integration difficulty in unit tests.
 
@@ -64,13 +64,13 @@ provides a new way to seamlessly integrate with Spring Boot App and docker-compo
 called [Spring-Boot-Docker-Compose](https://docs.spring.io/spring-boot/reference/features/dev-services.html#features.dev-services.docker-compose),
 follow the starting guide could easily run the app with the dependency container together in one command.
 
-just add the dependency
+- Adding the dependency to the build.gradle of the app module:
 
 ```groovy
 developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 ```
 
-then provide a `compose.yaml` file in the root folder can do the trick. If the compose.yaml has a different name or in a
+- Provide a `compose.yaml` file in the root folder can do the trick. If the `compose.yaml` has a different name or in a
 different folder, `spring.docker.compose.file` can solve the problem, refer
 to [Using a Specific Compose File](https://docs.spring.io/spring-boot/reference/features/dev-services.html#features.dev-services.docker-compose.specific-file).
 
@@ -91,12 +91,12 @@ To enhance the development and testing experience, consider the following improv
 
 Since the practice of spring profiles is usually used as a dependency management method. For example, we add a
 profile `redis` in `spring.profiles.include`, to include `application-redis.yaml`, which contains the related config for
-using redis.
+using Redis.
 
 So we want to link docker compose profiles to Spring profiles. In this way, developers can ensure that the correct
 configuration is used and the corresponding container is up also.
 
-To do that, we need some modification:
+To do that, we need some modifications:
 
 1. use comma separate format for `spring.profiles.include`
 
@@ -119,7 +119,7 @@ To do that, we need some modification:
           active: ${spring.profiles.include}
   ```
 
-3. add profile for each service in compose.yaml
+3. add profiles for each service in compose.yaml
 
   ```yaml title="compose.yaml"
   version: "3"
@@ -148,9 +148,9 @@ To do that, we need some modification:
 
 #### Ignore when Building in Image:
 
-[JIB](https://github.com/GoogleContainerTools/jib) is now an out-of-the-box technic of building image for a Spring Boot Application. For now, JIB still include the spring-boot-docker-compose library in the built image (we can track on [this issue](https://github.com/GoogleContainerTools/jib-extensions/issues/158) for new solutions). However, in most cases, we have existed dependency components (e.g. DB service, Redis cluster...) in Test, Staging, or Production environment. So we need to manually exclude it by setting up by jib-layer-filter-extension for [gradle](https://github.com/GoogleContainerTools/jib-extensions/tree/master/first-party/jib-layer-filter-extension-gradle)/[maven](https://github.com/GoogleContainerTools/jib-extensions/tree/master/first-party/jib-layer-filter-extension-maven).
+[JIB](https://github.com/GoogleContainerTools/jib) is now an out-of-the-box technic of building image for a Spring Boot Application. For now, JIB still includes the spring-boot-docker-compose library in the built image (we can track [this issue](https://github.com/GoogleContainerTools/jib-extensions/issues/158) for new solutions). However, in most cases, we have existed dependency components (e.g. DB service, Redis cluster...) in the Test, Staging, or Production environment. So we need to manually exclude it by setting up by jib-layer-filter-extension for [gradle](https://github.com/GoogleContainerTools/jib-extensions/tree/master/first-party/jib-layer-filter-extension-gradle) or [maven](https://github.com/GoogleContainerTools/jib-extensions/tree/master/first-party/jib-layer-filter-extension-maven).
 
-1. add buildscript at the start of root `build.gradle`
+1. add buildscript at the start of the root `build.gradle`
   ```yaml
   buildscript {
       dependencies {
@@ -200,7 +200,7 @@ spring:
 
 Then, in our test class, just add the `@SpringBootTest`, so that the docker-compose will trigger by spring boot app.
 
-#### Shared Containers Across Modules:
+#### Shared Containers Across Modules
 
 If your application consists of multiple modules, sharing Docker containers across tests can significantly speed up the
 testing process. Instead of spinning up new containers for each test module, containers can be shared, reducing the startup time and resource usage.
