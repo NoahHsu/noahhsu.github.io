@@ -25,7 +25,7 @@ Developers often rely on Docker to create a consistent and reproducible environm
 applications. When the number of dependency components grows, two key tools used in this process are Docker Compose and
 Makefile.
 
-However, in a multi-module project, each application might need different dependencies. It comes to a difficult
+However, in a multi-module project, each app might need different dependencies. It comes to a difficult
 situation.
 Every time we need to put [different profiles](https://docs.docker.com/compose/profiles/) with `docker-compose up`, or
 wrap it into [different `make` commands](https://makefiletutorial.com/).
@@ -37,7 +37,7 @@ Don't even mention the integration difficulty in unit tests.
 When a test needs to cover the dependency, it first comes up with the mock framework in a programmatic way.
 But it turns out to lose so many details because of the lack of real integration. such as
 
-1. The dialect and SQL execution difference between in-memory h2 DB and a real Mysql DB.
+1. The dialect and SQL execution difference between in-memory h2 DB and a real MySQL DB.
 2. Provide a mock Java object to make an API Client test lose the coverage of the JSON parsing process.
 
 so some of them start to use the TestContainer technic, to provide a real instance during unit tests. However,
@@ -49,7 +49,7 @@ TestContainer suffers from some points too, like:
 
 ## Introducing the Spring-Boot-Docker-Compose
 
-In conclusion, the way of providing dependency containers is not a flawless practice for now. So Spring community
+In conclusion, the way of providing dependency containers isn't a flawless practice for now. So Spring community
 provides a new way to seamlessly integrate with Spring Boot App and docker-compose
 called [Spring-Boot-Docker-Compose](https://docs.spring.io/spring-boot/reference/features/dev-services.html#features.dev-services.docker-compose),
 follow the starting guide could easily run the app with the dependency container together in one command.
@@ -68,7 +68,7 @@ to [Using a Specific Compose File](https://docs.spring.io/spring-boot/reference/
 
 ![start_with_docker_podman.png](resources/sb-docker/start_with_docker_podman.png)
 
-From now on, every project member can run the application without manually starting the dependency component container
+From now on, every project member can run the app without manually starting the dependency component container
 cluster.
 
 ## Little More Setup to Make It Better
