@@ -1,43 +1,21 @@
 ---
 date:
-created: 2024-08-18
+  created: 2024-09-01
 authors:
-
-- NoahHsu
-  categories:
-- Spring Boot
-  tags:
+  - NoahHsu
+categories:
+  - Spring Boot
+tags:
 - Java
-- Development
-- Unit Test
-- Integration Test
-
+  - Development
+  - Unit Test
+  - Integration Test
+  - Docker
 ---
 
-# Spring Boot 3 Support Docker Compose Shows Easy and Consistent on Develop and Test
+# Spring Boot 3.1 Docker Compose Support: The Most Intuitive and Consistent Way to Develop and Run Tests with Containers
 
-OutLine:
-
-- As-Is
-    - in-dev
-        - makefile
-        - docker compose
-    - in test
-        - Test-Container
-        - Mock
-- little addon setup to make better
-    - dev
-        - docker profile align to spring profile
-
-        - avoid build in image
-    - test
-        - active in test
-        - shared in different module
-- summary advantage
-    - no prior knowledge (docker compose or makefile) for develop to run application
-    - standalone (not affected by library version supported)
-    - test case consistency
-    - test speed performance
+![SB-Docker-cover.png](resources%2Fsb-docker%2FSB-Docker-cover.png)
 
 ## As-Is
 
@@ -158,61 +136,94 @@ To do that, we need some modification:
         - '6379:6379'
   ```
 
-#### Avoid Building in Image:
+#### Ignore when Building in Image:
 
-During development, it's often unnecessary to build a full Docker image for each code change. Instead, developers can
-mount the source code directly into the container. This approach speeds up the development process by allowing instant
-feedback on code changes without the overhead of rebuilding the image.
+[JIB](https://github.com/GoogleContainerTools/jib) is now an out-of-the-box technic of building image for a Spring Boot Application. For now, JIB still include the spring-boot-docker-compose library in the built image (we can track on [this issue](https://github.com/GoogleContainerTools/jib-extensions/issues/158) for new solutions). However, in most cases, we have existed dependency components (e.g. DB service, Redis cluster...) in Test, Staging, or Production environment. So we need to manually exclude it by setting up by jib-layer-filter-extension for [gradle](https://github.com/GoogleContainerTools/jib-extensions/tree/master/first-party/jib-layer-filter-extension-gradle)/[maven](https://github.com/GoogleContainerTools/jib-extensions/tree/master/first-party/jib-layer-filter-extension-maven).
+
+1. add buildscript at the start of root `build.gradle`
+  ```yaml
+  buildscript {
+      dependencies {
+          classpath('com.google.cloud.tools:jib-layer-filter-extension-gradle:0.3.0')
+      }
+  }
+  ... other settings
+  ```
+2. add plugin usage in jib.gradle
+  ```groovy
+  jib {
+    // ... other settings
+    pluginExtensions {
+        pluginExtension {
+            implementation = 'com.google.cloud.tools.jib.gradle.extension.layerfilter.JibLayerFilterExtension'
+            configuration {
+                filters {
+                    filter {
+                        glob = '**/spring-boot-docker-compose-*.jar'
+                    }
+                }
+            }
+        }
+    }
+  }
+  ```
+
+In this way, the image built by JIB will not include the `spring-boot-docker-compose` library and can run like a normal Spring Boot Application. 
 
 ### For Testing
 
 #### Activate Docker in Tests:
 
-To fully leverage Docker in tests, it's essential to activate the Docker environment within the test framework. This can
-be done by configuring the test setup to spin up necessary Docker containers automatically. This ensures that tests run
-in an environment identical to production.
+In default, the `spring-boot-docker-compose` is disabled when running tests. So we need to activate it by ourselves via property: `spring.docker.compose.skip.in-tests`. Besides, the root folder when running a test is the module folder, so we need to provide the file path to the `root/compose.yaml`. In result, we will write a `test/resources/application.yaml` like:
+
+```yaml
+spring:
+  docker:
+    compose:
+      enabled: true
+      file: ../../compose.yml  # my test class is in root/modules/client
+      skip:
+        in-tests: false
+      profiles:
+        active: ${spring.profiles.include}
+```
+
+Then, in our test class, just add the `@SpringBootTest`, so that the docker-compose will trigger by spring boot app.
 
 #### Shared Containers Across Modules:
 
 If your application consists of multiple modules, sharing Docker containers across tests can significantly speed up the
-testing process. Instead of spinning up a new container for each test module, containers can be shared, reducing the
-startup time and resource usage.
+testing process. Instead of spinning up new containers for each test module, containers can be shared, reducing the startup time and resource usage.
+
+If we set the `spring.docker.compose.lifecycle-management` as `start-only` ([reference to document](https://docs.spring.io/spring-boot/reference/features/dev-services.html#features.dev-services.docker-compose.lifecycle)), then the docker cluster will not stop after each test. In the second test, which needs to start the docker-compose, will find the docker cluster is already up and ignore that.
 
 ![profile_not_updated.png](resources/sb-docker/profile_not_updated.png)
 
 ## Summary of Advantages
 
-Using Docker in both development and testing environments provides several key benefits:
+Using Spring-Boot-Docker-Compose in both development and testing environments provides several key benefits:
 
 ### No Prior Knowledge Required:
 
-Developers don't need to be experts in Docker Compose or Makefile to get started. The setup can be standardized and
-documented, allowing even newcomers to the project to spin up the application quickly.
+Developers don't need to know and execute `docker-compose` or `makefile` to run dependency components before running the Spring Boot application. The setup can be standardized and automatic, allowing even newcomers to the project to start the application quickly.
 
-### Standalone Setup:
+### Decoupling TestContainer Java Library
 
-The application environment is entirely contained within Docker, meaning it is not affected by the host system's library
-versions or configurations. This reduces the "it works on my machine" problem and ensures that the application runs
-consistently in any environment.
+By using this technic, we can be free from finding the supported TestContainer library for each component, when we need to do extra initialize setup, such as creating schema and data in [Mysql-TestContainer](https://java.testcontainers.org/modules/databases/mysql/), adding mock-rules for [MockServer TestContainer](https://java.testcontainers.org/modules/mockserver/), ...etc. We can use the same setting method as we used in developing.
 
 ### Test Case Consistency:
 
-By using Docker for tests, you ensure that all test cases run in a consistent environment. This reduces flakiness and
-makes test results more reliable.
+By using Spring-Boot-Docker-Compose for tests, we ensure that all test data are consistent between development and test. Reducing the effort to try to make extra test data in developing features.
 
-### Improved Test Performance:
+### Improved Test Coverage:
 
-Sharing Docker containers across test modules and avoiding unnecessary builds can lead to significant performance
-improvements. Tests run faster, which speeds up the feedback loop and improves overall productivity.
+In this way, We can easily write some Integration-Test (In a style that the connection didn't go out of one machine, (Otherwise would be called an E2E-Test)) by `@SpringBootTest` (with images of DB, Kafka, Redis, Mock-Server... ). So that the PR-check can provide more confidence than normal Unit-Test.
 
-In conclusion, integrating Docker support into your Spring Boot development and testing workflow offers a streamlined,
+In conclusion, integrating Spring-Boot-Docker-Compose support into your Spring Boot development and testing offers an intuitive,
 consistent, and efficient process that can significantly enhance productivity and reliability. With just a few
-additional configurations, you can leverage the full power of Docker to create a development environment that is both
-easy to use and highly effective.
+additional configurations, you can leverage the full power of Docker to create a development environment that is both easy to use and highly effective.
 
 ### Reference
 
 - https://docs.spring.io/spring-boot/reference/features/dev-services.html#features.dev-services.docker-compose
-- wiremock json syntax: [https://wiremock.org/docs/request-matching/](https://wiremock.org/docs/request-matching/)
-- wiremock
-  docker: [https://github.com/wiremock/wiremock-docker/tree/main](https://github.com/wiremock/wiremock-docker/tree/main)
+- https://github.com/GoogleContainerTools/jib-extensions/issues/158
