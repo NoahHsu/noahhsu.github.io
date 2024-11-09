@@ -52,12 +52,10 @@ jobs:
 
       - name: Unlock git-crypt
         run: |
-          git-crypt init
           git status
-          git commit -a -m "temp commit"
-          echo ${{ secrets.GIT_CRYPT_KEY }} | base64  -d > ./git-crypt-key
-          git-crypt unlock ./git-crypt-key
-          rm ./git-crypt-key
+          echo ${{ secrets.GIT_CRYPT_KEY }} | base64  -d > ./.git/git-crypt/keys/default
+          git-crypt unlock ./.git/git-crypt/keys/default
+          rm ./.git/git-crypt/keys/default
 
       - name: check git-crypt status
         run: |
