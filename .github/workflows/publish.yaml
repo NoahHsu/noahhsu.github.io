@@ -24,6 +24,9 @@ jobs:
     name: Deploy docs
     runs-on: ubuntu-latest
     steps:
+      - name: Install git-crypt
+        run: |
+          sudo apt-get update && sudo apt-get install -y git-crypt
       - uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_TOKEN}}
@@ -45,18 +48,11 @@ jobs:
 #        env:
 #          GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
 
-      - name: Install git-crypt
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y git-crypt
-
       - name: Unlock git-crypt
+        env:
+          GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
         run: |
-          git status
-          ls -al
-          echo ${{ secrets.GIT_CRYPT_KEY }} | base64  -d > .git/git-crypt/keys/default
-          git-crypt unlock .git/git-crypt/keys/default
-          rm .git/git-crypt/keys/default
+          echo "$GIT_CRYPT_KEY" | base64  -d > git-crypt-key && git-crypt unlock git-crypt-key
 
       - name: check git-crypt status
         run: |
