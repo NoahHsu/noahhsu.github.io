@@ -40,10 +40,26 @@ jobs:
             "mkdocs-glightbox" \
             "mkdocs-encryptcontent-plugin"
 
-      - name: Unlock secrets
-        uses: sliteteam/github-action-git-crypt-unlock@1.2.0
-        env:
-          GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
+#      - name: Unlock secrets
+#        uses: sliteteam/github-action-git-crypt-unlock@1.2.0
+#        env:
+#          GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
+
+      - name: Install git-crypt
+        run: |
+          git clone https://github.com/AGWA/git-crypt.git
+          cd git-crypt && make && make install PREFIX=/opt/project
+          echo "/opt/project/bin" >> $GITHUB_PATH
+
+      - name: Unlock git-crypt
+        run: |
+          echo ${{ secrets.GIT_CRYPT_KEY }} | base64  -d > ./git-crypt-key
+          git-crypt unlock ./git-crypt-key
+          rm ./git-crypt-key
+
+      - name: check git-crypt status
+        run: |
+          git-crypt status
 
       - name: Build Site
         run: mkdocs build
