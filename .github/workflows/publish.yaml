@@ -47,9 +47,8 @@ jobs:
 
       - name: Install git-crypt
         run: |
-          git clone https://github.com/AGWA/git-crypt.git
-          cd git-crypt && make && make install PREFIX=/opt/project
-          echo "/opt/project/bin" >> $GITHUB_PATH
+          sudo apt-get update
+          sudo apt-get install -y git-crypt
 
       - name: Unlock git-crypt
         run: |
