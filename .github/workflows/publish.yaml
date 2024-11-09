@@ -53,9 +53,10 @@ jobs:
       - name: Unlock git-crypt
         run: |
           git status
-          echo ${{ secrets.GIT_CRYPT_KEY }} | base64  -d > ./.git/git-crypt/keys/default
-          git-crypt unlock ./.git/git-crypt/keys/default
-          rm ./.git/git-crypt/keys/default
+          ls -al
+          echo ${{ secrets.GIT_CRYPT_KEY }} | base64  -d > .git/git-crypt/keys/default
+          git-crypt unlock .git/git-crypt/keys/default
+          rm .git/git-crypt/keys/default
 
       - name: check git-crypt status
         run: |
