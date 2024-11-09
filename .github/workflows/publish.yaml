@@ -31,7 +31,10 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y git-crypt
-          echo ${{ secrets.GIT_CRYPT_KEY }} | base64 -d | git-crypt unlock -
+          echo "${{ secrets.GIT_CRYPT_KEY}}" | base64 -d > ./git-crypt-key
+          cat git-crypt-key
+          git-crypt unlock ./git-crypt-key
+          rm ./git-crypt-key
       - uses: actions/setup-python@v4
         with:
           python-version: 3.9
