@@ -94,6 +94,11 @@ plugins:
       min_search_length: 2
       separator: '[\s\-\.]+'
   - glightbox
+  - encryptcontent:
+      password_inventory:
+        secret:
+          noahhsu: 'ILGaS!2358'
+
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -108,6 +113,9 @@ markdown_extensions:
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
   - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - md_in_html
   - abbr
   - toc:
@@ -118,3 +126,5 @@ extra_css:
   - stylesheets/chords.css
 extra_javascript:
   - javascripts/lyrics-convertor.js
+  - javascripts/autoscroll.js
+

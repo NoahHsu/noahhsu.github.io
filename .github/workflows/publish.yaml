@@ -5,7 +5,7 @@ on:
       - main
     paths:
       - 'docs/**'
-      - '.github/publish.yaml'
+      - '.github/workflows/publish.yaml'
       - mkdocs.yml
 
   workflow_dispatch:
@@ -37,7 +37,9 @@ jobs:
             "mkdocs-material" \
             "mkdocs-bootswatch" \
             "mkdocs-git-revision-date-plugin" \
-            "mkdocs-glightbox"
+            "mkdocs-glightbox" \
+            "mkdocs-encryptcontent-plugin"
+
 
       - name: Build Site
         run: mkdocs build

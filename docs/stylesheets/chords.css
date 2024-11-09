@@ -6,9 +6,17 @@ p {
   margin: 0; /* between paragraphs */
 }
 
+#scrollStepInput {
+    position: fixed;
+    top: 10;
+    right: 0;
+}
+
+
+
 div.chord {
   margin: 0;
-  line-height: 4.2em;
+  line-height: 4.3em;
   position: relative;
 }
 
@@ -16,7 +24,7 @@ span.chord {
   display: inline-block;
   position: absolute;
   line-height: 1em;
-  font-size: 80%;
+  font-size: 75%;
   color: light-dark(black, black);
   top: 0;
   background-color: lightgray;
