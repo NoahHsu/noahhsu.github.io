@@ -95,9 +95,7 @@ plugins:
       separator: '[\s\-\.]+'
   - glightbox
   - encryptcontent:
-      password_inventory:
-        secret:
-          noahhsu: 'ILGaS!2358'
+      password_file: 'passwords.yml'
 
 
 markdown_extensions:

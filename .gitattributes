@@ -1,1 +1,2 @@
 docs/Chord_Sheet/** filter=git-crypt diff=git-crypt
+passwords.yml filter=git-crypt diff=git-crypt
