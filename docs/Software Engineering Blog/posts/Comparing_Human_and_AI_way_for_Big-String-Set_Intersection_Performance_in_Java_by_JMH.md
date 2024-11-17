@@ -2,7 +2,7 @@
 
 Recently, I'm facing a case on my job, comparing two set of users and find the intersection as the result. But the difficult part is the number of set is quite big (both set could be 10,000+ elements). To provide a better experiment for our user, the speed can not be too slow. So I want to find a relatively quickly way to do the intersection work. 
 
-In this article, I use AI (gemini, chatGPT) and the 'old-school' way, stackoverflow to find several way to do the set intersection. And Use the JMH [Java Microbenchmark Harness](https://github.com/openjdk/jmh) to run all the test and produce report.
+In this article, I use AI (Gemini, ChatGPT) and the 'old-school' way, Stackoverflow to find several way to do the set intersection. And Use the JMH [Java Microbenchmark Harness](https://github.com/openjdk/jmh) to run all the test and produce report.
 
 ## Candidate Intersection Methods
 
