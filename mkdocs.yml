@@ -86,6 +86,7 @@ plugins:
         - DevOps
         - Spring Boot
         - System Design
+        - Coding
       authors_profiles: true
       pagination_per_page: 5
   - tags:
