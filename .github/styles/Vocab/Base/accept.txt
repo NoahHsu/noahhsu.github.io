@@ -8,3 +8,5 @@ Gemini
 ChatGPT
 Stackoverflow
 utils
+UUIDs
+UUID

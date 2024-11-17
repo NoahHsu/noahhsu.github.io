@@ -26,7 +26,7 @@ The second competitor is ChatGPT (GPT4o).
 
 ![chatGPT.png](resources/BigSetIntersec/chatGPT.png)
 
-ChatGpt write a straightforward function that using native java method `Set.retainAll` to do the trick. we call it the `smallSetRetainAllBigSet`.
+ChatGPT write a straightforward function that using native java method `Set.retainAll` to do the trick. we call it the `smallSetRetainAllBigSet`.
 
 ---
 
@@ -42,13 +42,13 @@ So we called this the `streamSmallSetIsContainedByBigSet` and another version as
 
 ### Stackoverflow way2: guava
 
-The final one way is to use the Google provide utils library, [Guava](https://github.com/google/guava). There is a method `intersection()` in the Utils-Class `Sets`. 
+The final one way is to use the Google provide utils library, [Guava](https://github.com/google/guava). There is a method `intersection()` in the utils-class `Sets`. 
 
 ![guava.png](resources/BigSetIntersec/guava.png)
 
 ## How to test: JMH
 
-We all know that the JVM needs some time (code execution) to warm up for steady performance on methods. Besides, we also need to do performance calculations and produce easy-to-read results. It sounds very troublesome. But luckily, we have Java Microbenchmark Harness (JMH) to do that for us.
+We all know that the JVM needs some time (code execution) to warm up for steady performance on methods. Besides, we also need to do performance calculations and produce easy-to-read results. It sounds troublesome. But luckily, we have Java Microbenchmark Harness (JMH) to do that for us.
 
 ### how to use
 
