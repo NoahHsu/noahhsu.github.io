@@ -1,3 +1,15 @@
+---
+date:
+  created: 2024-11-07
+authors:
+  - NoahHsu
+categories:
+  - Coding
+tags:
+  - Java
+  - Performance
+  - Set
+---
 # Comparing Human and AI way for Big-String-Set Intersection Performance in Java by JMH
 
 Recently, I'm facing a case on my job, comparing two set of users and find the intersection as the result. But the difficult part is the number of set is quite big (both set could be 10,000+ elements). To provide a better experiment for our user, the speed can not be too slow. So I want to find a relatively quickly way to do the intersection work. 

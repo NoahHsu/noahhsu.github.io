@@ -6,7 +6,7 @@ authors:
 categories:
   - Spring Boot
 tags:
-- Java
+  - Java
   - Development
   - Unit Test
   - Integration Test

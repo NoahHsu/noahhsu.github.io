@@ -8,6 +8,7 @@ categories:
 tags:
   - Kafka
   - Distributed Systems
+  - Performance
 ---
 # 3 Times Performance Improvement for Generative AI within a Kafka Pipeline System
 
