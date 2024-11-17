@@ -3,3 +3,10 @@ gradle
 Gradle
 Allprojects
 Makefile
+Microbenchmark
+Gemini
+ChatGPT
+Stackoverflow
+utils
+UUIDs
+UUID
